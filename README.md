@@ -13,3 +13,4 @@ Sneaky Snacker is a kid-friendly, interactive game where you try to eat snacks w
 
 [Trello Board](https://trello.com/b/4XvRo9u0)
 [Team Agreement](/TeamAgreement.md)
+[Software Requirements](/requirements.md)

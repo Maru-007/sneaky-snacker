@@ -1,0 +1,319 @@
+{
+  "adjacencyList": [
+    {"id": "kids-room","adjacent": ["hallway","bathroom"]},
+    {"id": "bathroom","adjacent": ["hallway","kids-room","parents-room"]},
+    {"id": "parents-room","adjacent": ["bathroom","hallway"]},
+    {"id": "hallway","adjacent": ["parents-room","bathroom","kids-room","garage","living-room","kitchen"]},
+    {"id": "garage","adjacent": ["hallway"]},
+    {"id": "living-room","adjacent": ["hallway","kitchen"]},
+    {"id": "kitchen","adjacent": ["living-room","hallway"]
+  }
+  ],
+
+  "game": {
+    "win-condition": {
+      "source": "Player",
+      "condition": {
+        "type": "comparison",
+        "left": "score",
+        "right": "score"
+      }
+    },
+    "lose-condition": {
+      "source": "Dad",
+      "condition": {
+        "type": "comparison",
+        "left": "score",
+        "right": "score"
+      }
+    }
+  },
+
+
+  "rooms": {
+    "kids-room": {
+       "description": {
+             "default": "You're in you're room. You're surrounded by your bed and toys cast carelessly on the floor. A hunger grows in you. It is time for cookies."
+             },
+       "items": {
+             "id": "backpack",
+              "name": "A backpack discarded on the ground",
+              "triggers": {
+              "action": "pickup",
+              "effect": {
+                 "scoreUpdate": "2"
+              }
+              }
+           },
+       "navigation": {
+              "id": "navigation",
+              "name": "would you like to travel to:",
+              "triggers": {
+              "navigate": {
+                 "gotoBathroom": "bathroom",
+                 "gotoHallway": "hallway"
+           }
+           },
+       "distractions": { 
+          
+              "id": "stereo",
+              "name": "You turn your stereo on, it's playing T-swizzle's favorite hits. You turn it up to max volume.",
+              "triggers": {
+              "navigate": {
+                  "gotoBathroom": "bathroom",
+                  "gotoHallway": "hallway"
+                },
+              "effect": {
+                  "scoreUpdate": "2"
+                }
+            }
+          }
+        },
+    "bathroom": {
+        "description": {
+            "default": "The bathroom is brightly lit. Makeup and and appliances are plugged in everywhere. There shower has a slow drip and there are hair ties all over the floor."
+          },
+        "items": {
+            "id": "Stepstool",
+            "name": "A stepstool is near the counter. You pick it up. This could be helpful",
+            "triggers": {
+              "action": "pickup",
+              "effect": {
+                "scoreUpdate": "1"
+              }
+            }
+          },
+        "navigation": {
+            "id": "navigation",
+            "name": "would you like to travel to:",
+            "triggers": {
+              "navigate": {
+                "gotoparentsRoom": "parents-room",
+                "gotoHallway": "hallway",
+                "gotokidsRoom": "kids-room"
+              }
+            }
+          },
+       "distractions": {
+            "id": "hairdryer",
+            "name": "You turn the hair-dryer on. It screams into life and slowly starts rotating on the bathroom counter. You hear movement in the house.",
+            "triggers": {
+                "navigate": {
+                    "gotoparentsRoom": "parents-room",
+                    "gotoHallway": "hallway",
+                    "gotokidsRoom": "kids-room"
+                  },
+                  "effect": {
+                    "scoreUpdate": "2"
+                  }
+                }
+              }
+            },
+
+    "parents-room": {
+              "description": {
+                "default": "There is a tall bed in the center. Two night-stands flank it. On either side is a Tall and narrow dresser and a short and wide dresser. On top of the dressers are a variety of interesting nicknacks. Dirty laundry sits in the corner."
+              },
+        "items": {
+                "id": "Slippers",
+                "name": "You put on slippers...they are much bigger than your feet but they make you queiter.",
+                "triggers": {
+                  "action": "pickup",
+                  "effect": {
+                    "scoreUpdate": "1"
+                  }
+                }
+              },
+       "navigation": {
+                "id": "navigation",
+                "name": "would you like to travel to:",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway",
+                    "gotoBathroom": "bathroom"
+                  }
+                }
+              },
+       "distractions": {
+                "id": "cologne",
+                "name": "You start spraying cologne all over the room. This is taking too long. You open the bottle and dump the cologne out on the floor and yourself",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway",
+                    "gotoBathroom": "bathroom"
+                  },
+                  "effect": {
+                    "scoreUpdate": "-2"
+                  }
+                }
+              }
+            },
+
+    "hallway": {
+              "description": {
+                "default": "The main hallway has one light halfway down. You can see a the glow of the tv from the entry to the living room. All the other doors are shut."
+              },
+       "items": {
+                "id": "Umbrella",
+                "name": "You have no idea how this will help you...but boy do you look cool.",
+                "triggers": {
+                  "action": "pickup",
+                  "effect": {
+                    "scoreUpdate": "0"
+                  }
+                }
+              },
+        "navigation": {
+                "id": "navigation",
+                "name": "would you like to travel to:",
+                "triggers": {
+                  "navigate": {
+                    "gotoBathroom": "bathroom",
+                    "gotokidsRoom": "kids-room",
+                    "gotoparentsRoom": "parents-room",
+                    "gotolivingRoom": "living-room",
+                    "gotoGarage": "garage",
+                    "gotoKitchen": "kitchen"
+                  }
+                }
+              },
+        "distractions": {
+                "id": "slam",
+                "name": "You slam a door shut, you hear an abrupt but slightly fearful 'Who is there!!?!' from down the hall. Dad is on alert.",
+                "triggers": {
+                  "navigate": {
+                    "gotoBathroom": "bathroom",
+                    "gotokidsRoom": "kids-room",
+                    "gotoparentsRoom": "parents-room",
+                    "gotolivingRoom": "living-room",
+                    "gotoGarage": "garage",
+                    "gotoKitchen": "kitchen"
+                  },
+                  "effect": {
+                    "scoreUpdate": "-1"
+                  }
+                }
+              }
+            },
+
+    "kitchen": {
+        "description": {
+                "default": "The kitchen. The vessel of your desires. On the counter, a cookie jar. Inside that jar: scrumptuous deliciousness..."
+              },
+       "navigation": {
+                "id": "navigation",
+                "name": "would you like to travel to:",
+                "triggers": {
+                  "navigate": {
+                    "gotolivingRoom": "living-room",
+                    "gotoHallway": "hallway"
+
+                  }
+                }
+              },
+        "CookieJar": {
+                "id": "cookiejar",
+                "name": "You attempt to open the cookie jar",
+                "triggers": {
+                  "action": "open",
+                  "effect": {
+                    "win": "You open the cookie jar and begin devouring cookies. The victory may be pyrric in the long run. But right now it, like the cookies, is delicious.",
+                    "lose": "Just as you begin to open the cookies, your father walks in and catches you. 'What do you think you are doing?' You're caught...games over."
+                  }
+                }
+              }
+            },
+    "living-room": {
+              "description": {
+                "default": "The living room has several chairs arranged around a TV. The lights are off and the TV is on. You can see Dad sitting in his chair, sleepy, watching the news."
+              },
+       "items": {
+                "id": "remote",
+                "name": "You slowly turn up the volume on the TV, making it harder for Dad to hear what is happening elsewhere.",
+                "triggers": {
+                  "action": "pickup",
+                  "effect": {
+                    "scoreUpdate": "3"
+                  }
+                }
+              },
+       "navigation": {
+                "id": "navigation",
+                "name": "would you like to travel to:",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway",
+                    "gotoKitchen": "kitchen"
+                  }
+                }
+              },
+       "distractions": {
+                "id": "thermostat",
+                "name": "You fiddle with the thermostat. You can hear it turn on, pumping heat into the house",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway",
+                    "gotoKitchen": "kitchen"
+                  },
+                  "effect": {
+                    "scoreUpdate": "-3"
+                  }
+                }
+              }
+            },
+
+    "garage": {
+              "description": {
+                "default": "The garage has stuff stacked all around. Only one car is there. Mom's car, of course. Dad's is outside covered in snow."
+              },
+       "items": {
+                "id": "Baseball Mitt",
+                "name": "You've been looking for this...you pick it up anyways",
+                "triggers": {
+                  "action": "pickup",
+                  "effect": {
+                    "scoreUpdate": "1"
+                  }
+                }
+              },
+        "navigation": {
+                "id": "navigation",
+                "name": "would you like to travel to:",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway"
+                  }
+                }
+              },
+        "distractions": {
+                "id": "caralarm",
+                "name": "You pull the handle of car several times. It begins to go off loudly. You hurridly leave.",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway"
+                  },
+                  "effect": {
+                    "scoreUpdate": "-1"
+                  }
+               }
+             }
+           }
+         }
+       }
+}
+      
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+

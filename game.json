@@ -73,9 +73,11 @@
             "name": "would you like to travel to:",
             "triggers": {
               "navigate": {
+
                 "gotoparentsRoom": "parentsroom",
                 "gotoHallway": "hallway",
                 "gotokidsRoom": "kidsroom"
+
               }
             }
           },
@@ -160,6 +162,7 @@
                   "navigate": {
                     "gotoBathroom": "bathroom",
                     "gotokidsRoom": "kidsroom",
+
                     "gotoparentsRoom": "parentsroom",
                     "gotolivingRoom": "livingroom",
                     "gotoGarage": "garage",
@@ -173,7 +176,9 @@
                 "triggers": {
                   "navigate": {
                     "gotoBathroom": "bathroom",
+
                     "gotokidsRoom": "kidsroom",
+
                     "gotoparentsRoom": "parentsroom",
                     "gotolivingRoom": "livingroom",
                     "gotoGarage": "garage",
@@ -294,3 +299,4 @@
            }
          }
 }
+

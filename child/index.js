@@ -5,19 +5,21 @@ const inquirer = require("inquirer");
 
 function startPlayer1() {
   socket.emit(EVENT_NAMES.playerReady, 'player1');
-  // socket.on(EVENT_NAMES.questionsReady, (question) => {
-  //   inquirer
-  //     .prompt([
-  //       {
-  //         name: 'sneakySnacker',
-  //         message: question,
-  //       },
-  //     ])
-  //     .then((answer) => {
-  //       console.log('Player1 answer:', answer);
-  //       socket.emit(EVENT_NAMES.answer, answer);
-  //     });
-  // });
+  socket.on(EVENT_NAMES.questionsReady, (question) => {
+    inquirer
+      .prompt([
+        {
+          name: question.name,
+          message: question.message,
+          type: question.type,
+          choices: question.choices,
+        },
+      ])
+      .then((answer) => {
+        console.log('Player1 answer:', answer);
+        socket.emit(EVENT_NAMES.answer, answer);
+      });
+  });
 
   // socket.on(EVENT_NAMES.answer, (payload) => {
   //   console.log(payload);
@@ -25,6 +27,3 @@ function startPlayer1() {
 }
 
 startPlayer1();
-
-// figure out what needs to be inside of initializing function to start & join game
-// initialize sqs

@@ -1,29 +1,20 @@
 
-//Welcome message for game
-async function welcome() {
-  const title = await inquirer.prompt({
-    name: "welcomeMessage",
-    message: "Welcome to Sneaky Snacker! Would you like to start a new game?",
-    type: "list",
-    choices: ["Yes", "No"],
-    //If yes, instantiate game instance; if no, escape to home.
-});
+const gamePrompt = {
+    name: 'gameplay',
+    message: 'You are currently playing as the child. You will be given options to navigate throughout the house. The goal is to reach the snacks before dad catches you.',
+    type: 'list',
+    choices: ['Ok', 'Quit']
 }
 
-//You are now playing as ___________. 
-//Options: OK (next scene) / Q (quit)
-//Type: List
+const kidsRoom = {
+    name: 'gameplay',
+    message: 'You are in your room. You are surrounded by your bed and toys cast carelessly on the floor. A hunger grows in you. It is time for cookies.',
+    type: 'list',
+    choices: ['Move to the Bathroom', 'Move to the Hallway']
+}
 
-//You are now in the kid's room
-//Prompt
-//Options: Search / Navigate / Distract
-//Type: List
 
-//Search
-//Data: prompt
-//Options: Action: Pickup? Yes / No
-//Type: List
 
-//Navigate 
-//Data: name
-//Options: Navigate
+module.exports = [
+    gamePrompt, kidsRoom
+]

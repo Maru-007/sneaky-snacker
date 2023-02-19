@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "player1": "node child/index.js"
+    "player1": "node child/index.js",
+    "server": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,9 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "chalk-animation": "^2.0.3",
+    "express": "^4.18.2",
     "inquirer": "^8.2.5",
     "socket.io": "^4.6.0",
     "socket.io-client": "^4.6.0"
   }
 }
-

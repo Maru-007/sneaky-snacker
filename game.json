@@ -162,7 +162,6 @@
                   "navigate": {
                     "gotoBathroom": "bathroom",
                     "gotokidsRoom": "kidsroom",
-
                     "gotoparentsRoom": "parentsroom",
                     "gotolivingRoom": "livingroom",
                     "gotoGarage": "garage",
@@ -176,9 +175,7 @@
                 "triggers": {
                   "navigate": {
                     "gotoBathroom": "bathroom",
-
                     "gotokidsRoom": "kidsroom",
-
                     "gotoparentsRoom": "parentsroom",
                     "gotolivingRoom": "livingroom",
                     "gotoGarage": "garage",

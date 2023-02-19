@@ -1,38 +1,98 @@
-const gameData = require('../../game.json')
-const prompts = require('../../prompt')
+const gameData = require('../../game.json');
+const prompts = require('../../prompt');
 const inquirer = require('inquirer');
+const queue = require('../../questionsQueue/classQueue');
+
+
+
 
 class Room {
     constructor() {
         this.doors = [];
+        this.currentLocation = false;
         // This is where items would go
     }
 }
 
-function newRooms () {
-    let kidsroom = new Room(); 
-    let bathroom = new Room(); 
-    let parentsroom = new Room(); 
-    let hallway = new Room(); 
-    let garage = new Room(); 
-    let livingroom = new Room();
-    let kitchen = new Room(); 
-    const graph = [kidsroom, bathroom, parentsroom, hallway, garage, livingroom, kitchen]
+let kidsroom = new Room(); 
+let bathroom = new Room(); 
+let parentsroom = new Room(); 
+let hallway = new Room(); 
+let garage = new Room(); 
+let livingroom = new Room();
+let kitchen = new Room(); 
 
-    graph.forEach(room => {
-       for (let i = 0; i <= 6; i++) {
-        room.doors = gameData.adjacencyList[i].adjacent
-      }
+// Array of room objects
+const graph = [kidsroom, bathroom, parentsroom, hallway, garage, livingroom, kitchen];
+
+
+
+function newRooms () {
+    // Adds adjacent rooms to each room object in graph array
+    graph.forEach((room, i) => {
+        console.log(i)
+        room.doors = gameData.adjacencyList[i].adjacent;
     });
-    return graph
+    return graph;
+}
+
+newRooms()
+console.log(graph)
+const answerQueue = new queue();
+
+async function navigator (i) {
+    const navigate = {
+        name: 'navigate',
+        message: 'Select the room you want to go to',
+        type: 'list',
+        choices: gameData.rooms[roomname].navigation.triggers.navigate
+    }
+
+    let room = {
+        name: 'gameplay',
+        message: gameData.rooms.[roomname].description.default,
+        type: 'list',
+        choices: ['Navigate', 'Search']
+    } 
+
+    await inquirer.prompt(prompts[1]).then((answers) => answerQueue.enqueue(answers))
+    
+    if (answerQueue.front.value.gameplay === 'Navigate') {
+        // Navigation
+        await inquirer.prompt(navigate)
+        console.log(graph[i + 1].currentLocation)
+        graph[i].currentLocation = true
+        graph[i].currentLocation = false
+        answerQueue.dequeue()
+    }
+    
 }
 
 async function navigation() {
     
+    for (let i = 0; i <= gameData.adjacencyList.length; i++) {
+        await navigator(i)
+    }
+    
+    // graph[0].currentLocation = true
+    // if (answerQueue.front.value.gameplay === 'Move to the bathroom') {
+        
+    //     console.log(graph[1].currentLocation)
+    //     answerQueue.dequeue()
+    //     await inquirer.prompt(prompts[2]).then((answers) => answerQueue.enqueue(answers))
+    // } 
+
+    // // another if statement
+
+    //     graph[1].currentLocation = false
+    //     graph[2].currentLocation = true
+
+    // // console.log(answerQueue.front.value.gameplay)
+
 }
 
 
-
+module.exports = navigation;
 
 
 

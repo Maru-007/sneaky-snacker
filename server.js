@@ -1,8 +1,9 @@
 const gameData = require('./game.json')
 const prompts = require('./prompt')
 const inquirer = require('inquirer');
-
+const queue = require('./questionsQueue/classQueue');
 const express = require('express');
+const navigation = require('./src/navigation/navigation')
 
 const server = express();
 
@@ -19,8 +20,7 @@ async function welcome() {
     //If yes, instantiate game instance; if no, escape to home.
   });
 
-  await inquirer.prompt(prompts[0])
-  const kidsRoom = await inquirer.prompt(prompts[1])
+  navigation()
 }
 
 

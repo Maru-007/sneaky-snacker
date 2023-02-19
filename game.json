@@ -30,11 +30,9 @@
               "id": "navigation",
               "name": "would you like to travel to:",
               "triggers": {
-              "navigate": {
-                 "gotoBathroom": "bathroom",
-                 "gotoHallway": "hallway"
-           }
-           },
+                "navigate": ["Go to bathroom","Go to hallway"]
+              }
+        },
         "distractions": { 
           
               "id": "stereo",

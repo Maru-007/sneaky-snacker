@@ -33,4 +33,4 @@ Rooms:
         effects.scoreupdate: score added to players base.
   }
   }
-  '''
+  

@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "search": "node src/search/search.js"
+    }
+}

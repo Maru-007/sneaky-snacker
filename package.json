@@ -1,5 +1,29 @@
 {
-    "scripts": {
-        "search": "node src/search/search.js"
-    }
+  "name": "sneaky-snacker",
+  "version": "1.0.0",
+  "description": "Sneaky Snacker is a kid-friendly, interactive game where you try to eat snacks without getting caught.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "player1": "node child/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maru-007/sneaky-snacker.git"
+  },
+  "author": "Stacy, Andra, Chris, Ethan, Vida, Gaz, Ezgi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Maru-007/sneaky-snacker/issues"
+  },
+  "homepage": "https://github.com/Maru-007/sneaky-snacker#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "chalk-animation": "^2.0.3",
+    "inquirer": "^8.2.5",
+    "socket.io": "^4.6.0",
+    "socket.io-client": "^4.6.0"
+  }
 }
+

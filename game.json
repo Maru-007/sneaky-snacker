@@ -3,7 +3,7 @@
     {"id": "kidsroom","adjacent": ["hallway","bathroom"]},
     {"id": "bathroom","adjacent": ["hallway","kidsroom","parentsroom"]},
     {"id": "parentsroom","adjacent": ["bathroom","hallway"]},
-    {"id": "hallway","adjacent": ["parents-room","bathroom","kidsroom","garage","livingroom","kitchen"]},
+    {"id": "hallway","adjacent": ["parentsroom","bathroom","kidsroom","garage","livingroom","kitchen"]},
     {"id": "garage","adjacent": ["hallway"]},
     {"id": "livingroom","adjacent": ["hallway","kitchen"]},
     {"id": "kitchen","adjacent": ["livingroom","hallway"]}
@@ -73,9 +73,11 @@
             "name": "would you like to travel to:",
             "triggers": {
               "navigate": {
-                "gotoparentsRoom": "parents-room",
+
+                "gotoparentsRoom": "parentsroom",
                 "gotoHallway": "hallway",
-                "gotokidsRoom": "kids-room"
+                "gotokidsRoom": "kidsroom"
+
               }
             }
           },
@@ -159,7 +161,8 @@
                 "triggers": {
                   "navigate": {
                     "gotoBathroom": "bathroom",
-                    "gotokidsRoom": "kids-room",
+                    "gotokidsRoom": "kidsroom",
+
                     "gotoparentsRoom": "parentsroom",
                     "gotolivingRoom": "livingroom",
                     "gotoGarage": "garage",
@@ -173,7 +176,9 @@
                 "triggers": {
                   "navigate": {
                     "gotoBathroom": "bathroom",
-                    "gotokidsRoom": "kids-room",
+
+                    "gotokidsRoom": "kidsroom",
+
                     "gotoparentsRoom": "parentsroom",
                     "gotolivingRoom": "livingroom",
                     "gotoGarage": "garage",
@@ -293,6 +298,5 @@
              }
            }
          }
-
 }
 

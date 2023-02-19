@@ -5,23 +5,23 @@ const inquirer = require("inquirer");
 
 function startPlayer1() {
   socket.emit(EVENT_NAMES.playerReady, 'player1');
-  socket.on(EVENT_NAMES.questionsReady, (question) => {
-    inquirer
-      .prompt([
-        {
-          name: 'sneakySnacker',
-          message: question,
-        },
-      ])
-      .then((answer) => {
-        console.log('Player1 answer:', answer);
-        socket.emit(EVENT_NAMES.answer, answer);
-      });
-  });
+  // socket.on(EVENT_NAMES.questionsReady, (question) => {
+  //   inquirer
+  //     .prompt([
+  //       {
+  //         name: 'sneakySnacker',
+  //         message: question,
+  //       },
+  //     ])
+  //     .then((answer) => {
+  //       console.log('Player1 answer:', answer);
+  //       socket.emit(EVENT_NAMES.answer, answer);
+  //     });
+  // });
 
-  socket.on(EVENT_NAMES.answer, (payload) => {
-    console.log(payload);
-  });
+  // socket.on(EVENT_NAMES.answer, (payload) => {
+  //   console.log(payload);
+  // });
 }
 
 startPlayer1();

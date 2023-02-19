@@ -1,0 +1,74 @@
+{
+    "adjacencyList": [
+      {"id": "kids-room","adjacent": ["hallway","bathroom"]},
+      {"id": "bathroom","adjacent": ["hallway","kids-room","parents-room"]},
+      {"id": "parents-room","adjacent": ["bathroom","hallway"]},
+      {"id": "hallway","adjacent": ["parents-room","bathroom","kids-room","garage","living-room","kitchen"]},
+      {"id": "garage","adjacent": ["hallway"]},
+      {"id": "living-room","adjacent": ["hallway","kitchen"]},
+      {"id": "kitchen","adjacent": ["living-room","hallway"]
+    }
+    ],
+  
+    "game": {
+      "win-condition": {
+        "source": "Player",
+        "condition": {
+          "type": "comparison",
+          "left": "score",
+          "right": "score"
+        }
+      },
+      "lose-condition": {
+        "source": "Dad",
+        "condition": {
+          "type": "comparison",
+          "left": "score",
+          "right": "score"
+        }
+      }
+    },
+  
+  
+    "rooms": {
+      "kidsroom": {
+         "description": {
+               "default": "You're in you're room. You're surrounded by your bed and toys cast carelessly on the floor. A hunger grows in you. It is time for cookies."
+               },
+         "items": {
+               "id": "backpack",
+                "name": "A backpack discarded on the ground",
+                "triggers": {
+                "action": "pickup",
+                "effect": {
+                   "scoreUpdate": "2"
+                }
+                }
+             },
+         "navigation": {
+                "id": "navigation",
+                "name": "would you like to travel to:",
+                "triggers": {
+                "navigate": {
+                   "gotoBathroom": "bathroom",
+                   "gotoHallway": "hallway"
+             }
+             },
+         "distractions": { 
+            
+                "id": "stereo",
+                "name": "You turn your stereo on, it's playing T-swizzle's favorite hits. You turn it up to max volume.",
+                "triggers": {
+                "navigate": {
+                    "gotoBathroom": "bathroom",
+                    "gotoHallway": "hallway"
+                  },
+                "effect": {
+                    "scoreUpdate": "2"
+                  }
+              }
+            }
+          }
+      }
+    }
+}

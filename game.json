@@ -48,7 +48,6 @@
                 }
             }
           }
-        }
       },
    "bathroom": {
         "description": {
@@ -70,13 +69,8 @@
             "id": "navigation",
             "name": "would you like to travel to:",
             "triggers": {
-              "navigate": {
-
-                "gotoparentsRoom": "parentsroom",
-                "gotoHallway": "hallway",
-                "gotokidsRoom": "kidsroom"
-
-              }
+              "navigate": ["Go to parent's room", "Go to hallway", "Go to kid's room"]
+              
             }
           },
         "distractions": {
@@ -116,10 +110,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoHallway": "hallway",
-                    "gotoBathroom": "bathroom"
-                  }
+                  "navigate": ["Go to hallway", "Go to bathroom"]
                 }
               },
         "distractions": {
@@ -157,14 +148,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoBathroom": "bathroom",
-                    "gotokidsRoom": "kidsroom",
-                    "gotoparentsRoom": "parentsroom",
-                    "gotolivingRoom": "livingroom",
-                    "gotoGarage": "garage",
-                    "gotoKitchen": "kitchen"
-                  }
+                  "navigate": ["Go to bathroom", "Go to kid's room", "Go to parent's room", "Go to living room", "Go to garage", "Go to kitchen"]
                 }
               },
         "distractions": {
@@ -194,11 +178,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotolivingRoom": "livingroom",
-                    "gotoHallway": "hallway"
-
-                  }
+                  "navigate": ["Go to living room", "Go to hallway"]     
                 }
               },
         "CookieJar": {
@@ -232,10 +212,8 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoHallway": "hallway",
-                    "gotoKitchen": "kitchen"
-                  }
+                  "navigate": ["Go to hallway", "Go to kitchen"]
+                  
                 }
               },
         "distractions": {
@@ -274,9 +252,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoHallway": "hallway"
-                  }
+                  "navigate": ["Go to hallway"]
                 }
               },
         "distractions": {
@@ -292,6 +268,7 @@
                }
              }
            }
+          
          }
-}
+        }
 

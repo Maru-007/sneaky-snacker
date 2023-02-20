@@ -17,42 +17,42 @@ const bathroom = {
   name: 'gameplay',
   message: gameData.rooms.bathroom.description.default,
   type: 'list',
-  choices: ['Move to your parent\'s room', 'Move to the hallway', 'Move to your room']
+  choices: ['Navigate', 'Search']
 }
 
 const parentsroom = {
   name: 'gameplay',
   message: gameData.rooms.parentsroom.description.default,
   type: 'list',
-  choices: ['Move to the bathroom', 'Move to the hallway']
+  choices: ['Navigate', 'Search']
 }
 
 const hallway = {
   name: 'gameplay',
   message: gameData.rooms.hallway.description.default,
   type: 'list',
-  choices: ['Move to the bathroom', 'Move to the hallway', 'Move to your room', 'Move to your parent\'s room', 'Move to the living room', 'Move to the garage', 'Move to the kitchen']
+  choices: ['Navigate', 'Search']
 }
 
 const kitchen = {
   name: 'gameplay',
   message: gameData.rooms.kitchen.description.default,
   type: 'list',
-  choices: ['Move to the living room', 'Move to the hallway']
+  choices: ['Navigate', 'Search']
 }
 
 const livingroom = {
   name: 'gameplay',
   message: gameData.rooms.livingroom.description.default,
   type: 'list',
-  choices: ['Move to the hallway', 'Move to the kitchen']
+  choices: ['Navigate', 'Search']
 }
 
 const garage = {
   name: 'gameplay',
   message: gameData.rooms.garage.description.default,
   type: 'list',
-  choices: ['Move to the hallway']
+  choices: ['Navigate', 'Search']
 }
 
 

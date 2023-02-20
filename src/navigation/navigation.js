@@ -51,9 +51,7 @@ function handleNavigation(direction) {
         currentLocation = foundRoom;
         options = currentLocation.doors;
         return [currentLocation.id, options];
-      } else {
-        return "Invalid direction. Please try again.";
-      }
+      } 
     }
   }
 }

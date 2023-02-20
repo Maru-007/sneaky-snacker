@@ -1,8 +1,6 @@
 const { Server } = require('socket.io');
 const io = new Server(3001);
 const { EVENT_NAMES } = require('./utils');
-//Going to get questions from SQS and send to players using inquirer format
-// const { questionsReady } = require("./questionsQueue/index");
 const inquirer = require('inquirer');
 const prompts = require('./prompt')
 const { handleNavigation } = require('./src/navigation/navigation')
@@ -16,8 +14,6 @@ const { handleNavigation } = require('./src/navigation/navigation')
 //     //If yes, instantiate game instance; if no, escape to home.
 //   });
 // }
-
-let answerCount = 0;
 
 const welcomePrompt = {
   name: 'gameplay',
@@ -33,7 +29,12 @@ const gamePrompt = {
   choices: ['Ok', 'Quit']
 }
 
-
+//playerReady(sent from USER): user joins game
+//welcomePrompt(sent from SERVER): emit to user first prompt, welcomePrompt
+//startGame(sent from SERVER): nav prompt 1 - need one hard coded to sent initial location, send to handleNavigation fn; will be another fn inside of navigation.js
+//selection(sent from USER)pass direction/selection from nav prompt 1 into the handleNavigation function.The user will receive a prompt containing choices from the handleNavigation return array consisting of current location, options (options being the choices)
+//receive info back about where the user wants to go. This will modify what choices the user has in nav prompt 2
+// navGame(sent from SERVER): nav prompt 2 - needs to get user from one room to another
 
 function startEventServer() {
   io.on('connection', (socket) => {
@@ -42,36 +43,8 @@ function startEventServer() {
     socket.on(EVENT_NAMES.playerReady, (player) => {
       console.log(`${player} is ready!`);
       io.emit(EVENT_NAMES.questionsReady, welcomePrompt);
-    });
+    })
 
-    socket.on(EVENT_NAMES.answer, (answer) => {
-      if (answer.gameplay === 'Yes'){
-        answerCount += 1;
-        io.emit(EVENT_NAMES.questionsReady, gamePrompt);
-      } else if (answer.gameplay === 'No'){
-        io.emit(EVENT_NAMES.questionsReady, welcomePrompt);
-      }
-      if (answerCount === 1){
-        if (answer.gameplay === 'Ok'){
-          answerCount += 1;
-          io.emit(EVENT_NAMES.questionsReady, prompts[1])
-          if (answer.gameplay === 'Navigate') {
-            const navigate = {
-              name: 'navigate',
-              message: 'Select the room you want to go to',
-              type: 'list',
-              choices: ["Go to bathroom","Go to hallway"]
-            }
-            console.log()
-            io.emit(EVENT_NAMES.questionsReady, navigate) 
-            handleNavigation()
-            // io.emit(EVENT_NAMES)
-          }
-        } else if (answer.gameplay === 'Quit'){
-          io.emit(EVENT_NAMES.questionsReady, welcomePrompt);
-        }
-      }
-    });
   });
 }
 

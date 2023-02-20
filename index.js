@@ -5,7 +5,7 @@ const { EVENT_NAMES } = require('./utils');
 // const { questionsReady } = require("./questionsQueue/index");
 const inquirer = require('inquirer');
 const prompts = require('./prompt')
-const navigate = require('./src/navigation/navigation')
+const { handleNavigation } = require('./src/navigation/navigation')
 
 // async function welcome() {
 //   const title = await inquirer.prompt({
@@ -56,7 +56,16 @@ function startEventServer() {
           answerCount += 1;
           io.emit(EVENT_NAMES.questionsReady, prompts[1])
           if (answer.gameplay === 'Navigate') {
-            io.emit('navigate')
+            const navigate = {
+              name: 'navigate',
+              message: 'Select the room you want to go to',
+              type: 'list',
+              choices: ["Go to bathroom","Go to hallway"]
+            }
+            console.log()
+            io.emit(EVENT_NAMES.questionsReady, navigate) 
+            handleNavigation()
+            // io.emit(EVENT_NAMES)
           }
         } else if (answer.gameplay === 'Quit'){
           io.emit(EVENT_NAMES.questionsReady, welcomePrompt);
@@ -67,3 +76,5 @@ function startEventServer() {
 }
 
 startEventServer();
+// Sends user direction
+

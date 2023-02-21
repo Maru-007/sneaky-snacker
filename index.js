@@ -33,7 +33,8 @@ const gamePrompt = {
 //playerReady(sent from USER): user joins game
 //welcomePrompt(sent from SERVER): emit to user first prompt, welcomePrompt
 //startGame(sent from SERVER): nav prompt 1 - need one hard coded to sent initial location, send to handleNavigation fn; will be another fn inside of navigation.js
-//selection(sent from USER)pass direction/selection from nav prompt 1 into the handleNavigation function.The user will receive a prompt containing choices from the handleNavigation return array consisting of current location, options (options being the choices)
+//selection(sent from USER)pass direction/selection from nav prompt 1 into the handleNavigation function.The user will receive a prompt containing choices from the 
+//handleNavigation return array consisting of current location, options (options being the choices)
 //receive info back about where the user wants to go. This will modify what choices the user has in nav prompt 2
 // navGame(sent from SERVER): nav prompt 2 - needs to get user from one room to another
 
@@ -68,10 +69,14 @@ function startEventServer() {
     })
 
     socket.on(EVENT_NAMES.selection, (answer) => {
+      // if (answer === a roomname) {
+          // handleNavigation, emit prompt
+      //}
+      // answer for example would be hallway
       handleNavigation(answer) // Answer payload will be the room the user wants to move to
       // Need to figure out how to iterate through prompts array
       io.emit(EVENT_NAMES.questionsReady, prompts[answer])
-    })
+    });
   });
 }
 

@@ -8,7 +8,7 @@ class Room {
     constructor() {
         this.doors = [];
         this.id = null;
-        // this.currentLocation = false;
+        
         // This is where items would go
     }
 }
@@ -22,23 +22,24 @@ let livingroom = new Room();
 let kitchen = new Room(); 
 const graph = {kidsroom, bathroom, parentsroom, hallway, garage, livingroom, kitchen};
 
-// Array of room objects
-// const graph = [kidsroom, bathroom, parentsroom, hallway, garage, livingroom, kitchen];
+
 
 function newRooms () {
     // Adds adjacent rooms to each room object in graph array
     let i = 0;
-    for (let room in graph) {
+    for (let room of Object.values(graph)) {
+        
         room.id = gameData.adjacencyList[i].id;
         room.doors = gameData.adjacencyList[i].adjacent;
         i++
+        
     }
     return graph;
 }
 newRooms()
 
 
-let currentLocation = graph[0];
+let currentLocation = graph.kidsroom;
 
 // Direction = input of selected adjacent value, for kidsroom, hallway || bathroom
 // let direction = "hallway"

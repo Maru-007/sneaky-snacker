@@ -45,13 +45,6 @@ const gamePrompt = {
 
 let currentRoom = 'kidsroom';
 
-const navigatePrompt = {
-  name: 'gameplay',
-  message: 'Where would you like to go?',
-  type: 'list',
-  choices: handleNavigation(currentRoom)
-}
-
 function startEventServer() {
   io.on('connection', (socket) => {
     console.log('We have a new connection:', socket.id);
@@ -68,6 +61,12 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, prompts[0])
       } else if (answer.gameplay === 'Navigate') {
         console.log(currentRoom);
+        const navigatePrompt = {
+          name: 'gameplay',
+          message: 'Where would you like to go?',
+          type: 'list',
+          choices: handleNavigation(currentRoom)
+        }
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt)
       } else if (rooms.includes(answer.gameplay)) {
         let room = prompts.find(obj => obj.id === answer.gameplay)
@@ -78,6 +77,9 @@ function startEventServer() {
     })
   }
 )}
+
+
+
 startEventServer();
 
 //   socket.on(EVENT_NAMES.selection, (answer) => {

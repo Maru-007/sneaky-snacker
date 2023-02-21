@@ -40,17 +40,31 @@ newRooms()
 
 
 let currentLocation = graph.kidsroom;
+console.log(currentLocation);
 
 // Direction = input of selected adjacent value, for kidsroom, hallway || bathroom
 // let direction = "hallway"
 
 
+// function handleNavigation(direction) {
+//     let i = 0;
+//     for (let room of Object.values(graph)) {
+//         if (direction === room.id){
+//             currentLocation = graph[room]
+//         }
+//     }
+//     console.log(currentLocation)
+//     options = currentLocation.doors;
+//     return currentLocation.id;
+// }
+
 function handleNavigation(direction) {
     currentLocation = graph[direction]
     console.log(currentLocation)
     options = currentLocation.doors;
-    return [currentLocation.id, options];
+    return options;
 }
+
 
 
 

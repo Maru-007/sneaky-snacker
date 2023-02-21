@@ -39,7 +39,7 @@ function newRooms () {
 newRooms()
 
 
-let currentLocation = graph.kidsroom;
+let currentLocation;
 console.log(currentLocation);
 
 // Direction = input of selected adjacent value, for kidsroom, hallway || bathroom

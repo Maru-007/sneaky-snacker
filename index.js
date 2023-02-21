@@ -9,7 +9,7 @@ const gameData = require("./game.json");
 const rooms = [
   'kidsroom', 'bathroom', 'parentsroom', 'hallway', 'kitchen', 'livingroom', 'garage'
 ]
-let currentRoom = 'kidsroom';
+
 
 // async function welcome() {
 //   const title = await inquirer.prompt({
@@ -19,7 +19,7 @@ let currentRoom = 'kidsroom';
 //     choices: ['Yes', 'No'],
 //     //If yes, instantiate game instance; if no, escape to home.
 //   });
-// }
+// 
 
 const welcomePrompt = {
   name: 'gameplay',
@@ -43,6 +43,7 @@ const gamePrompt = {
 //receive info back about where the user wants to go. This will modify what choices the user has in nav prompt 2
 // navGame(sent from SERVER): nav prompt 2 - needs to get user from one room to another
 
+let currentRoom = 'kidsroom';
 
 const navigatePrompt = {
   name: 'gameplay',
@@ -66,28 +67,27 @@ function startEventServer() {
         console.log(prompts[0])
         io.emit(EVENT_NAMES.questionsReady, prompts[0])
       } else if (answer.gameplay === 'Navigate') {
-          io.emit(EVENT_NAMES.questionsReady, navigatePrompt)
+        console.log(currentRoom);
+        io.emit(EVENT_NAMES.questionsReady, navigatePrompt)
       } else if (rooms.includes(answer.gameplay)) {
         let room = prompts.find(obj => obj.id === answer.gameplay)
         io.emit(EVENT_NAMES.questionsReady, room)
-        console.log(handleNavigation(answer.gameplay))
+        currentRoom = answer.gameplay;
+        console.log(currentRoom)
       }
     })
-
-
-  //   socket.on(EVENT_NAMES.selection, (answer) => {
-  //     // if (answer === a roomname) {
-  //         // handleNavigation, emit prompt
-  //     //}
-  //     // answer for example would be hallway
-  //     handleNavigation(answer) // Answer payload will be the room the user wants to move to
-  //     // Need to figure out how to iterate through prompts array
-  // 
-      // io.emit(EVENT_NAMES.questionsReady, prompts[answer])
-  //   });
-  });
-}
-
+  }
+)}
 startEventServer();
-// Sends user direction
 
+//   socket.on(EVENT_NAMES.selection, (answer) => {
+//       // if (answer === a roomname) {
+//           // handleNavigation, emit prompt
+//       //}
+//       // answer for example would be hallway
+//       handleNavigation(answer) // Answer payload will be the room the user wants to move to
+//       // Need to figure out how to iterate through prompts array
+  
+//       io.emit(EVENT_NAMES.questionsReady, prompts[answer])
+//     });
+// Sends user direction

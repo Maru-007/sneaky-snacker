@@ -12,7 +12,8 @@
   "rooms": {
     "kidsroom": {
         "description": {
-             "default": "You're in you're room. You're surrounded by your bed and toys cast carelessly on the floor. A hunger grows in you. It is time for cookies."
+             "default": "You're in you're room. You're surrounded by your bed and toys cast carelessly on the floor. A hunger grows in you. It is time for cookies.",
+             "dog": "You're in Melis's room. You're surrounded by her bed and toys cast carelessly on the floor."
              },
         "Search": {
               "id": "backpack",
@@ -37,6 +38,7 @@
           
               "id": "stereo",
               "prompt": "You see a stereo. Do you turn it on?",
+              "dogPrompt": "Bark?",
               "event": "You turn your stereo on, it's playing T-swizzle's favorite hits. You turn it up to max volume.",
               "triggers": {
               "navigate": {
@@ -76,6 +78,7 @@
         "distractions": {
             "id": "hairdryer",
             "name": "You turn the hair-dryer on. It screams into life and slowly starts rotating on the bathroom counter. You hear movement in the house.",
+            "dogPrompt": "Bark?",
             "triggers": {
                 "navigate": {
                     "gotoparentsRoom": "parentsroom",
@@ -116,6 +119,7 @@
         "distractions": {
                 "id": "cologne",
                 "name": "You start spraying cologne all over the room. This is taking too long. You open the bottle and dump the cologne out on the floor and yourself",
+                "dogPrompt": "Bark?",
                 "triggers": {
                   "navigate": {
                     "gotoHallway": "hallway",
@@ -154,6 +158,7 @@
         "distractions": {
                 "id": "slam",
                 "name": "You slam a door shut, you hear an abrupt but slightly fearful 'Who is there!!?!' from down the hall. Dad is on alert.",
+                "dogPrompt": "Bark?",
                 "triggers": {
                   "navigate": {
                     "gotoBathroom": "bathroom",
@@ -219,6 +224,7 @@
         "distractions": {
                 "id": "thermostat",
                 "name": "You fiddle with the thermostat. You can hear it turn on, pumping heat into the house",
+                "dogPrompt": "Bark?",
                 "triggers": {
                   "navigate": {
                     "gotoHallway": "hallway",
@@ -258,6 +264,7 @@
         "distractions": {
                 "id": "caralarm",
                 "name": "You pull the handle of car several times. It begins to go off loudly. You hurridly leave.",
+                "dogPrompt": "Bark?",
                 "triggers": {
                   "navigate": {
                     "gotoHallway": "hallway"

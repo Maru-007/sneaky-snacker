@@ -5,6 +5,7 @@ const inquirer = require('inquirer');
 const prompts = require('./prompt')
 const { handleNavigation } = require('./src/navigation/navigation')
 const gameData = require("./game.json");
+const winCondition = require('./src/cookieJar')
 
 const rooms = [
   'kidsroom', 'bathroom', 'parentsroom', 'hallway', 'kitchen', 'livingroom', 'garage'
@@ -73,7 +74,11 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, room)
         currentRoom = answer.gameplay;
         console.log(currentRoom)
-      }
+      } else if (answer.gameplay === 'Cookie Jar') {
+        
+        io.emit(EVENT_NAMES.questionsReady, winCondition())
+        currentRoom = 'kidsroom'
+      } 
     })
   }
 )}

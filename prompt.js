@@ -1,10 +1,4 @@
 const gameData = require('./game.json');
-const gamePrompt = {
-    name: 'gameplay',
-    message: 'You are currently playing as the child. You will be given options to navigate throughout the house. The goal is to reach the snacks before dad catches you.',
-    type: 'list',
-    choices: ['Ok', 'Quit']
-}
 
 const kidsroom = {
     name: 'gameplay',
@@ -58,5 +52,5 @@ const garage = {
 
 
 module.exports = [
-    gamePrompt, kidsroom, bathroom, parentsroom, hallway, kitchen, livingroom, garage
+    kidsroom, bathroom, parentsroom, hallway, kitchen, livingroom, garage
 ]

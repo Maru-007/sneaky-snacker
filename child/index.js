@@ -17,7 +17,7 @@ function startPlayer1() {
       ])
       .then((answer) => {
         console.log('Player1 answer:', answer);
-        socket.emit(EVENT_NAMES.answer, answer);
+        socket.emit(EVENT_NAMES.selection, answer);
       });
   });
 

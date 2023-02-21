@@ -4,6 +4,7 @@ const { EVENT_NAMES } = require('./utils');
 const inquirer = require('inquirer');
 const prompts = require('./prompt')
 const { handleNavigation } = require('./src/navigation/navigation')
+const gameData = require("./game.json");
 
 // async function welcome() {
 //   const title = await inquirer.prompt({
@@ -36,6 +37,15 @@ const gamePrompt = {
 //receive info back about where the user wants to go. This will modify what choices the user has in nav prompt 2
 // navGame(sent from SERVER): nav prompt 2 - needs to get user from one room to another
 
+
+const navigatePrompt = {
+  name: 'gameplay',
+  message: 'Where would you like to go?',
+  type: 'list',
+  choices: gameData.adjacencyList[0].adjacent
+
+}
+
 function startEventServer() {
   io.on('connection', (socket) => {
     console.log('We have a new connection:', socket.id);
@@ -45,6 +55,23 @@ function startEventServer() {
       io.emit(EVENT_NAMES.questionsReady, welcomePrompt);
     })
 
+    socket.on(EVENT_NAMES.selection, (answer) => {
+      if (answer.gameplay = 'Yes') {
+        console.log(prompts[0])
+        io.emit(EVENT_NAMES.questionsReady, prompts[0])
+
+      }
+    })
+    socket.on(EVENT_NAMES.navigate, (answer) => { // Answer payload is going to be user chose 'Navigate' or user chose 'Search'
+      // Only has functionality for navigate, we will need if conditionals for search.
+      io.emit(EVENT_NAMES.questionsReady, navigatePrompt)
+    })
+
+    socket.on(EVENT_NAMES.selection, (answer) => {
+      handleNavigation(answer) // Answer payload will be the room the user wants to move to
+      // Need to figure out how to iterate through prompts array
+      io.emit(EVENT_NAMES.questionsReady, prompts[answer])
+    })
   });
 }
 

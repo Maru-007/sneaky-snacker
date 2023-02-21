@@ -4,6 +4,7 @@ const { EVENT_NAMES } = require('./utils');
 const inquirer = require('inquirer');
 const prompts = require('./prompt')
 const { handleNavigation } = require('./src/navigation/navigation')
+const { handleSearch } = require('./src/search/search');
 const gameData = require("./game.json");
 
 const rooms = [
@@ -73,12 +74,34 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, room)
         currentRoom = answer.gameplay;
         console.log(currentRoom)
+      } else if (answer.gameplay === 'Search'){
+        const searchPrompt = {
+          name: 'gameSearch',
+          message: handleSearch(currentRoom),
+          type: 'confirm',
+        }
+        io.emit(EVENT_NAMES.questionsReady, searchPrompt)
+      } else if (answer.gameSearch === true){
+        gameData.rooms[currentRoom].Search.pickedup === true;
+        const navigatePrompt = {
+          name: 'gameplay',
+          message: 'Where would you like to go?',
+          type: 'list',
+          choices: handleNavigation(currentRoom)
+        }
+        io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
+      } else if (answer.gameSearch === false){
+        const navigatePrompt = {
+          name: 'gameplay',
+          message: 'Where would you like to go?',
+          type: 'list',
+          choices: handleNavigation(currentRoom)
+        }
+        io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       }
     })
   }
 )}
-
-
 
 startEventServer();
 

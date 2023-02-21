@@ -37,7 +37,7 @@ const kitchen = {
   name: 'gameplay',
   message: gameData.rooms.kitchen.description.default,
   type: 'list',
-  choices: ['Navigate', 'Search'],
+  choices: ['Navigate'],
   id: 'kitchen'
 
 }

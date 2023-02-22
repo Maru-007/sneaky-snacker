@@ -22,6 +22,14 @@ const rooms = [
 //     //If yes, instantiate game instance; if no, escape to home.
 //   });
 // 
+let currentRoom = 'kidsroom';
+
+const distraction = {
+  name: 'gameplay',
+  message: gameData.rooms[currentRoom].distractions.prompt,
+  type: 'list',
+  choices: ["Distract", "Don\'t Distract"]
+}
 
 const welcomePrompt = {
   name: 'gameplay',
@@ -45,7 +53,6 @@ const gamePrompt = {
 //receive info back about where the user wants to go. This will modify what choices the user has in nav prompt 2
 // navGame(sent from SERVER): nav prompt 2 - needs to get user from one room to another
 
-let currentRoom = 'kidsroom';
 
 function startEventServer() {
   io.on('connection', (socket) => {
@@ -69,13 +76,21 @@ function startEventServer() {
           type: 'list',
           choices: handleNavigation(currentRoom)
         }
-        io.emit(EVENT_NAMES.questionsReady, navigatePrompt)
+        io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       } else if (rooms.includes(answer.gameplay)) {
-        let room = prompts.find(obj => obj.id === answer.gameplay)
-        io.emit(EVENT_NAMES.questionsReady, room)
+        let room = prompts.find(obj => obj.id === answer.gameplay);
+        io.emit(EVENT_NAMES.questionsReady, room);
         currentRoom = answer.gameplay;
-        console.log(currentRoom)
-
+        console.log(currentRoom);
+      } else if (answer.gameplay === 'Distraction') {
+        io.emit(EVENT_NAMES.questionsReady, distraction);
+      } else if (answer.gameplay === 'Distract') {
+        let room = prompts.find(obj => obj.id === currentRoom);
+        io.emit(EVENT_NAMES.message, gameData.rooms[currentRoom].distractions.event);
+        io.emit(EVENT_NAMES.questionsReady, room);
+      } else if (answer.gameplay === 'Don\'t Distract') {
+        let room = prompts.find(obj => obj.id === currentRoom);
+        io.emit(EVENT_NAMES.questionsReady, room);
       } else if (answer.gameplay === 'Search'){
         const searchPrompt = {
           name: 'gameSearch',

@@ -5,6 +5,8 @@ const inquirer = require('inquirer');
 const prompts = require('./prompt');
 const dogPrompts = require('./prompt-dog');
 const { handleNavigation } = require('./src/navigation/navigation');
+const { handleSearch } = require('./src/search/search');
+const { handleChildDistraction, handleEvent } = require('./src/distraction/distraction');
 const gameData = require('./game.json');
 const winCondition = require('./src/cookieJar');
 
@@ -23,7 +25,13 @@ const rooms = [
 
 let currentRoom = 'kidsroom';
 let dogCurrentRoom = 'kidsroom';
-let dadCurrentRoom = 'livingroom'
+let dadCurrentRoom = 'livingroom';
+let playerBase = 15;
+// add to modifier when player picks up item & distracts
+let playerModifier = 10;
+
+let dadBase = 15;
+let dadModifier = 10;
 
 
 const welcomePrompt = {
@@ -63,6 +71,7 @@ function startEventServer() {
 
   io.on('connection', (socket) => {
     console.log('We have a new connection:', socket.id);
+    console.log(gameData.rooms);
 
     socket.on(EVENT_NAMES.childReady, () => onChildReady(socket));
     socket.on(EVENT_NAMES.dogReady, () => onDogReady(socket));
@@ -98,6 +107,9 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, searchPrompt)
       } else if (answer.gameSearch === true){
         gameData.rooms[currentRoom].Search.pickedup === true;
+        let itemScore = gameData.rooms[currentRoom].Search.triggers.effect.scoreUpdate;
+        playerModifier += itemScore;
+        console.log(playerModifier);
         const navigatePrompt = {
           name: 'gameplay',
           message: 'Where would you like to go?',
@@ -113,6 +125,39 @@ function startEventServer() {
           choices: handleNavigation(currentRoom)
         }
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
+      } else if (answer.gameplay === 'Distractions'){
+        const distractionsPrompt = {
+          name: 'gameDistraction',
+          message: handleChildDistraction(currentRoom),
+          type: 'confirm',
+        }
+        io.emit(EVENT_NAMES.questionsReady, distractionsPrompt)
+      } else if (answer.gameDistraction === true){
+        let itemScore = gameData.rooms[currentRoom].distractions.triggers.effect.scoreUpdate;
+        playerModifier += itemScore;
+        console.log(playerModifier);
+        const eventPrompt = {
+          name: 'gameEvent',
+          message: handleEvent(currentRoom),
+          type: 'confirm',
+        }
+        io.emit(EVENT_NAMES.questionsReady, eventPrompt);
+      } else if (answer.gameDistraction === false){
+        const navigatePrompt = {
+          name: 'gameplay',
+          message: 'Where would you like to go?',
+          type: 'list',
+          choices: handleNavigation(currentRoom)
+        }
+        io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
+      } else if (answer.gameEvent === true || answer.gameEvent === false){
+        const navigatePrompt = {
+          name: 'gameplay',
+          message: 'Where would you like to go?',
+          type: 'list',
+          choices: handleNavigation(currentRoom)
+        }
+        io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       } else if (answer.gameplay === 'Cookie Jar') {
         
         io.emit(EVENT_NAMES.questionsReady, winCondition())
@@ -120,37 +165,18 @@ function startEventServer() {
       } 
 
     })
-  }
-)}
     socket.on(EVENT_NAMES.dogSelection, (answer) => {
       console.log(answer.gameplay);
-      if (answer.gameplay === 'Yes') {
-        io.emit(EVENT_NAMES.dogQuestions, dogPrompt);
-      }
-      if (answer.gameplay === 'Ok' || answer.distraction === true || answer.distraction === false) {
-        const helpMelis = {
-          name: 'gameplay',
-          message: `Melis is currently in the ${currentRoom}. What would you like to do?`,
-          type: 'list',
-          choices: ['Navigate', 'Distraction'],
-        };
-        io.emit(EVENT_NAMES.dogQuestions, helpMelis);
-      }
-      if (answer.gameplay === 'Navigate') {
-        console.log(dogCurrentRoom);
-        const navigatePrompt = {
-          name: 'gameplay',
-          message: 'Where would you like to go?',
-          type: 'list',
-          choices: handleNavigation(dogCurrentRoom),
-        };
-        io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
+      const handleDog = handleGameplayDogSelection(answer, dogPrompt, dogCurrentRoom, currentRoom);
+      if (handleDog){
+        const [eventName, eventData] = handleDog;
+        io.emit(eventName, eventData);
       }
       if (rooms.includes(answer.gameplay)) {
         let room = dogPrompts.find((obj) => obj.id === answer.gameplay);
-        io.emit(EVENT_NAMES.dogQuestions, room);
         dogCurrentRoom = answer.gameplay;
         console.log(dogCurrentRoom);
+        io.emit(EVENT_NAMES.dogQuestions, room);
       }
       if (answer.gameplay === 'Distraction') {
         const distractionPrompt = {
@@ -167,6 +193,35 @@ function startEventServer() {
       //   dadModifier ++
       // }
     });
+  })}
+
+  function handleGameplayDogSelection(answer, dogPrompt, dogCurrentRoom, currentRoom){
+    if (answer.gameplay === 'Yes') {
+      return [EVENT_NAMES.dogQuestions, dogPrompt];
+      // io.emit(EVENT_NAMES.dogQuestions, dogPrompt);
+    }
+    if (answer.gameplay === 'Ok' || answer.distraction === true || answer.distraction === false) {
+      const helpMelis = {
+        name: 'gameplay',
+        message: `Melis is currently in the ${currentRoom}. What would you like to do?`,
+        type: 'list',
+        choices: ['Navigate', 'Distraction'],
+      };
+      return [EVENT_NAMES.dogQuestions, helpMelis];
+      // io.emit(EVENT_NAMES.dogQuestions, helpMelis);
+    }
+    if (answer.gameplay === 'Navigate') {
+      console.log(dogCurrentRoom);
+      const navigatePrompt = {
+        name: 'gameplay',
+        message: 'Where would you like to go?',
+        type: 'list',
+        choices: handleNavigation(dogCurrentRoom),
+      };
+      return [EVENT_NAMES.dogQuestions, navigatePrompt];
+      // io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
+    }
+  }
 
 function navigateDad() {
   console.log('Dad is currently in:', dadCurrentRoom);

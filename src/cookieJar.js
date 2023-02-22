@@ -5,7 +5,6 @@ let dadBase = 15;
 let dadModifier = 10;
 
 
-
 let win = {
   name: 'gameplay',
   message: 'You win! Do you want to play again?',

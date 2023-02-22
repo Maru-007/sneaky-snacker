@@ -5,6 +5,9 @@ const inquirer = require("inquirer");
 
 function startPlayer1() {
   socket.emit(EVENT_NAMES.playerReady, 'player1');
+  socket.on(EVENT_NAMES.quit, () => {
+    process.exit();
+  })
   socket.on(EVENT_NAMES.message, (message) => {
     console.log(message);
   })

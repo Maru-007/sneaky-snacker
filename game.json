@@ -78,9 +78,8 @@
             }
         }
       }
-        }
+        },
 
-      },
    "bathroom": {
         "description": {
             "default": "The bathroom is brightly lit. Makeup and and appliances are plugged in everywhere. There shower has a slow drip and there are hair ties all over the floor."
@@ -444,5 +443,4 @@
            }
 
          }
-        }
-
+}

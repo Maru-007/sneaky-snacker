@@ -54,6 +54,7 @@ const gamePrompt = {
 // navGame(sent from SERVER): nav prompt 2 - needs to get user from one room to another
 
 
+
 function startEventServer() {
   io.on('connection', (socket) => {
     console.log('We have a new connection:', socket.id);
@@ -119,7 +120,9 @@ function startEventServer() {
         
         io.emit(EVENT_NAMES.questionsReady, winCondition())
         currentRoom = 'kidsroom'
-      } 
+      } else if (answer.gameplay === 'No') {
+        io.emit(EVENT_NAMES.quit, 'Quit')
+      }
 
     })
   }

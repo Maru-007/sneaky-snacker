@@ -7,7 +7,8 @@ const EVENT_NAMES = {
   //need navigate event
   //this event will come from the server giving the user a choice of where to navigate
   navigate: 'navigate',
-  questionsReady: 'questionsReady'
+  questionsReady: 'questionsReady',
+  quit: 'quit'
 };
 
 module.exports = {

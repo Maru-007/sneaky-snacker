@@ -1,29 +1,66 @@
+const gameData = require('./game.json');
 
-//Welcome message for game
-async function welcome() {
-  const title = await inquirer.prompt({
-    name: "welcomeMessage",
-    message: "Welcome to Sneaky Snacker! Would you like to start a new game?",
-    type: "list",
-    choices: ["Yes", "No"],
-    //If yes, instantiate game instance; if no, escape to home.
-});
+const kidsroom = {
+    name: 'gameplay',
+    message: gameData.rooms.kidsroom.description.default,
+    type: 'list',
+    choices: ['Navigate', 'Search'],
+    id: 'kidsroom'
 }
 
-//You are now playing as ___________. 
-//Options: OK (next scene) / Q (quit)
-//Type: List
+const bathroom = {
+  name: 'gameplay',
+  message: gameData.rooms.bathroom.description.default,
+  type: 'list',
+  choices: ['Navigate', 'Search'],
+  id: 'bathroom'
 
-//You are now in the kid's room
-//Prompt
-//Options: Search / Navigate / Distract
-//Type: List
+}
 
-//Search
-//Data: prompt
-//Options: Action: Pickup? Yes / No
-//Type: List
+const parentsroom = {
+  name: 'gameplay',
+  message: gameData.rooms.parentsroom.description.default,
+  type: 'list',
+  choices: ['Navigate', 'Search'],
+  id: 'parentsroom'
+}
 
-//Navigate 
-//Data: name
-//Options: Navigate
+const hallway = {
+  name: 'gameplay',
+  message: gameData.rooms.hallway.description.default,
+  type: 'list',
+  choices: ['Navigate', 'Search'],
+  id: 'hallway'
+}
+
+const kitchen = {
+  name: 'gameplay',
+  message: gameData.rooms.kitchen.description.default,
+  type: 'list',
+  choices: ['Navigate', 'Cookie Jar'],
+  id: 'kitchen'
+
+}
+
+const livingroom = {
+  name: 'gameplay',
+  message: gameData.rooms.livingroom.description.default,
+  type: 'list',
+  choices: ['Navigate', 'Search'],
+  id: 'livingroom'
+
+}
+
+const garage = {
+  name: 'gameplay',
+  message: gameData.rooms.garage.description.default,
+  type: 'list',
+  choices: ['Navigate', 'Search'],
+  id: 'garage'
+
+}
+
+
+module.exports = [
+    kidsroom, bathroom, parentsroom, hallway, kitchen, livingroom, garage
+]

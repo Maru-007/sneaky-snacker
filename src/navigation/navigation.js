@@ -1,44 +1,72 @@
-const rooms = require("./rooms.json").rooms;
+const gameData = require("../../game.json");
+const inquirer = require('inquirer');
 
+const direction = require('../../index')
 //this is just a dictionary making the ids more palatable for the UI.
-const roomOptions = {
-    "kidsroom": "Kids Room",
-    "bathroom": "Bathroom",
-    "parentsroom": "Parents' Room",
-    "hallway": "Hallway",
-    "garage": "Garage",
-    "livingroom": "Living Room",
-    "kitchen": "Kitchen",
-  };
 
-
-function handleNavigation(socket, currentRoom) {
-//emit a message witht he current room's description when starting
-  socket.emit("message", currentRoom.description.default);
-//set up an event listener for the navigate event from the ui
-  socket.on("navigate", () => {
-//get the available navigation options for the current rooms
-    const options = currentRoom.navigation.triggers.navigate;
-    const availableOptions = Object.keys(options);
-//construct the question string with available room options
-    const question = `${currentRoom.navigation.name} ${availableOptions
-      .map((roomID) => {
-        const room = rooms[options[roomID]];
-        return `${roomOptions[room.id]} (${roomID})`;
-      })
-      .join(", ")}`;
-// Emit the question to the client
-    socket.emit("question", question);
-//set up an event listener for the selectoption event from the client
-    socket.once("selectOption", (option) => {
-      const targetRoom = options[option];
-      if (targetRoom) {
-// Update the current room and emit the new description to the client 
-        currentRoom = rooms[targetRoom];
-        socket.emit("message", currentRoom.description.default);
-      }
-    });
-  });
+class Room {
+    constructor() {
+        this.doors = [];
+        this.id = null;
+        
+        // This is where items would go
+    }
 }
 
-module.exports = handleNavigation;
+let kidsroom = new Room(); 
+let bathroom = new Room(); 
+let parentsroom = new Room(); 
+let hallway = new Room(); 
+let garage = new Room(); 
+let livingroom = new Room();
+let kitchen = new Room(); 
+const graph = {kidsroom, bathroom, parentsroom, hallway, garage, livingroom, kitchen};
+
+
+
+function newRooms () {
+    // Adds adjacent rooms to each room object in graph array
+    let i = 0;
+    for (let room of Object.values(graph)) {
+        
+        room.id = gameData.adjacencyList[i].id;
+        room.doors = gameData.adjacencyList[i].adjacent;
+        i++
+        
+    }
+    return graph;
+}
+newRooms()
+
+
+let currentLocation;
+console.log(currentLocation);
+
+// Direction = input of selected adjacent value, for kidsroom, hallway || bathroom
+// let direction = "hallway"
+
+
+// function handleNavigation(direction) {
+//     let i = 0;
+//     for (let room of Object.values(graph)) {
+//         if (direction === room.id){
+//             currentLocation = graph[room]
+//         }
+//     }
+//     console.log(currentLocation)
+//     options = currentLocation.doors;
+//     return currentLocation.id;
+// }
+
+function handleNavigation(direction) {
+    currentLocation = graph[direction]
+    console.log(currentLocation)
+    options = currentLocation.doors;
+    return options;
+}
+
+
+
+
+module.exports = { handleNavigation };
+// send handleNavigation options back along with room Id

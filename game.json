@@ -26,14 +26,25 @@
               }
               }
            },
-        "navigation": {
+        "dogSearch":{
+              "id": "sock",
+              "prompt": "Holy crap a dirty sock. It smells disgusting. Do you pick it up?",
+              "altprompt" : "You don't see anything useful.",
+              "pickedup" : false,
+              "obtained": "Of course you do...",
+              "triggers": {
+              "effect": {
+                "scoreUpdate": 1
+          }
+          }
+          },
+        "Navigation": {
               "id": "navigation",
               "name": "would you like to travel to:",
               "triggers": {
               "navigate": {
                  "gotoBathroom": "bathroom",
                  "gotoHallway": "hallway"
-           }
            },
         "distractions": { 
           
@@ -49,7 +60,22 @@
                   "scoreUpdate": 2
                 }
             }
-          }
+          },
+        "dogdistractions": { 
+          
+              "id": "pillow",
+              "prompt": "Out of the corner of your eye you see a threat...a pillow. Do you attack?",
+              "event": "you pounce on the pillow and rip it to shreds. Feathers rain down around you. Victory.",
+              "triggers": {
+              "navigate": {
+                  "gotoBathroom": "bathroom",
+                  "gotoHallway": "hallway"
+              },
+          "effect": {
+              "scoreUpdate": -1
+            }
+        }
+      }
         }
       },
    "bathroom": {
@@ -62,6 +88,18 @@
             "pickedup": false,
             "prompt" : "You see a stepstool near the counter.",
             "obtained": "You pick up the stepstool, it slides effortlessly into your backpack...somehow...",
+            "triggers": {
+              "effect": {
+                "scoreUpdate": 1
+              }
+            }
+          },
+        "dogSearch": {
+            "id": "toiletpaper",
+            "altprompt": "You don't see anything useful.",
+            "pickedup": false,
+            "prompt" : "You see some toilet paper dangling from its roll. Do you take it?",
+            "obtained": "With a sudden lunge, you spring forward. Teeth flashing as you snatch the toilet paper from its resting place. With a wild and feral energy you tear into the soft white sheets, shredding them into confeting and flinging them haphazardly around the bathroom. You feel strange and surreal. You, a once-tame animal now feel wild and frenzied as you tear apart your prey. As you near claiming victory, something curious begins to happen. Gradually, almost imperceptibly, the ferocity begins to fade, replaced by a contentment and satisfaction.",
             "triggers": {
               "effect": {
                 "scoreUpdate": 1
@@ -81,7 +119,8 @@
           },
         "distractions": {
             "id": "hairdryer",
-            "name": "You turn the hair-dryer on. It screams into life and slowly starts rotating on the bathroom counter. You hear movement in the house.",
+            "prompt":"You see a hairdryer on the counter. Do you turn it on?",
+            "event": "You turn the hair-dryer on. It screams into life and slowly starts rotating on the bathroom counter. You hear movement in the house.",
             "triggers": {
                 "navigate": {
                     "gotoparentsRoom": "parentsroom",
@@ -92,7 +131,22 @@
                     "scoreUpdate": 2
                   }
                 }
-              }
+              },
+        "dogdistractions": {
+            "id": "drink",
+            "prompt":"You see the forbidden water bowl. Fancy a drink?",
+            "event": "You slurp loudly from the bowl. Delicious!",
+            "triggers": {
+                "navigate": {
+                    "gotoparentsRoom": "parentsroom",
+                    "gotoHallway": "hallway",
+                    "gotokidsRoom": "kidsroom"
+                      },
+                  "effect": {
+                    "scoreUpdate": 2
+                      }
+                    }
+                  }
             },
 
     "parentsroom": {
@@ -112,6 +166,19 @@
                   }
                 }
               },
+        "dogSearch": {
+                "id": "highheels",
+                "prompt": "You see a nice pair of shoes. They smell like feet. Do you pick them up?",
+                "altprompt": "You don't see anything useful.",
+                "pickedup": false,
+                "obtained": "You gingerly pick up the shoe. You chew a little and bit hard to make sure you have a good grip...because you know Mom loves these shoes.",
+                "triggers": {
+
+                  "effect": {
+                    "scoreUpdate": 1
+                  }
+                }
+              },
         "navigation": {
                 "id": "navigation",
                 "name": "would you like to travel to:",
@@ -124,14 +191,29 @@
               },
         "distractions": {
                 "id": "cologne",
-                "name": "You start spraying cologne all over the room. This is taking too long. You open the bottle and dump the cologne out on the floor and yourself",
+                "prompt": "You see a bottle of dad's cologne. Do you use it?",
+                "event":"You spray the cologne all over. You smell like sandlewood. Delightful.",
                 "triggers": {
                   "navigate": {
                     "gotoHallway": "hallway",
                     "gotoBathroom": "bathroom"
                   },
                   "effect": {
-                    "scoreUpdate": -2
+                    "scoreUpdate": 1
+                  }
+                }
+              },
+        "dogdistractions": {
+                "id": "roomba",
+                "prompt": "You see a roomba with a glowing dot in the center. Do you press it with your nose?",
+                "event":"You press the glowing button and the roomba gives off a series of R2-D2 like noises...it begins to clean. ChatGPT notes the abuse of his robotic friend.",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway",
+                    "gotoBathroom": "bathroom"
+                  },
+                  "effect": {
+                    "scoreUpdate": 1
                   }
                 }
               }
@@ -153,6 +235,18 @@
                   }
                 }
               },
+        "dogSearch": {
+                "id": "squeaky",
+                "prompt": "You see a squeaky",
+                "altprompt":"You don't see anything useful.",
+                "pickedup": false,
+                "obtained": "Your favorite toy. You pick it up!",
+                "triggers": {
+                  "effect": {
+                    "scoreUpdate": 1
+                  }
+                }
+              },
         "navigation": {
                 "id": "navigation",
                 "name": "would you like to travel to:",
@@ -169,7 +263,26 @@
               },
         "distractions": {
                 "id": "slam",
-                "name": "You slam a door shut, you hear an abrupt but slightly fearful 'Who is there!!?!' from down the hall. Dad is on alert.",
+                "prompt": "You see an open door. Do you slam it shut?",
+                "event": "You slam a door shut, you hear an abrupt but slightly fearful 'Who is there!!?!' from down the hall. Dad is on alert.",
+                "triggers": {
+                  "navigate": {
+                    "gotoBathroom": "bathroom",
+                    "gotokidsRoom": "kids-room",
+                    "gotoparentsRoom": "parentsroom",
+                    "gotolivingRoom": "livingroom",
+                    "gotoGarage": "garage",
+                    "gotoKitchen": "kitchen"
+                  },
+                  "effect": {
+                    "scoreUpdate": -1
+                  }
+                }
+              },
+        "dogdistractions": {
+                "id": "mailman",
+                "prompt":"You think you hear someone at the door. Do you defend your house?",
+                "event": "You begin barking loudly in order to defend your house from murderers.",
                 "triggers": {
                   "navigate": {
                     "gotoBathroom": "bathroom",
@@ -228,6 +341,18 @@
                   }
                 }
               },
+        "dogSearch": {
+                "id": "flashlight",
+                "altprompt":"You don't see anything useful.",
+                "pickedup":false,
+                "prompt": "You see a flashlight on the floor. You have no idea what this is. Do you pick it up?",
+                "obtained": "It is now in your mouth.",
+                "triggers": {
+                  "effect": {
+                    "scoreUpdate": 3
+                  }
+                }
+              },
         "navigation": {
                 "id": "navigation",
                 "name": "would you like to travel to:",
@@ -240,7 +365,22 @@
               },
         "distractions": {
                 "id": "thermostat",
-                "name": "You fiddle with the thermostat. You can hear it turn on, pumping heat into the house",
+                "prompt":"You see the thermostat. You know its forbidden. Do you mess with it?",
+                "event": "You fiddle with the thermostat. You can hear it turn on, pumping heat into the house",
+                "triggers": {
+                  "navigate": {
+                    "gotoHallway": "hallway",
+                    "gotoKitchen": "kitchen"
+                  },
+                  "effect": {
+                    "scoreUpdate": -3
+                  }
+                }
+              },
+        "dogdistractions": {
+                "id": "plant",
+                "prompt":"You see a flower pot. In dirt. ...in dirt...do you?",
+                "event": "You begin digging in the flower pot. Because you can.",
                 "triggers": {
                   "navigate": {
                     "gotoHallway": "hallway",
@@ -270,6 +410,19 @@
                   }
                 }
               },
+        "dogSearch": {
+                "id": "tennisball",
+                "altprompt":"You don't see anything useful.",
+                "Prompt": "A tennis ball...your tennis ball. You've been looking for this. Do you pick it up now?",
+                "pickedup":false,
+                "obtained": "You ...put it in you pocket?",
+                "triggers": {
+                  "action": "pickup",
+                  "effect": {
+                    "scoreUpdate": 1
+                  }
+                }
+              },
         "navigation": {
                 "id": "navigation",
                 "name": "would you like to travel to:",
@@ -281,7 +434,8 @@
               },
         "distractions": {
                 "id": "caralarm",
-                "name": "You pull the handle of car several times. It begins to go off loudly. You hurridly leave.",
+                "prompt":"You consider setting off the car alarm. Do you?",
+                "event": "You pull the handle of car several times. It begins to go off loudly. You hurridly leave.",
                 "triggers": {
                   "navigate": {
                     "gotoHallway": "hallway"
@@ -290,7 +444,20 @@
                     "scoreUpdate": -1
                   }
                }
+             },
+        "dogdistractions": {
+              "id": "mouse",
+              "prompt":"A mouse! chase?",
+              "event": "You start chasing a mouse. You knock over boxes, golf clubs, and an aluminum ladder. The mouse gets away.",
+              "triggers": {
+                "navigate": {
+                  "gotoHallway": "hallway"
+                },
+                "effect": {
+                  "scoreUpdate": 2
+                }
              }
+           }
            }
          }
 }

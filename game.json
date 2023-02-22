@@ -57,7 +57,7 @@
             "id": "Stepstool",
             "altprompt": "You don't see anything useful.",
             "pickedup": false,
-            "prompt" : "You see a stepstool near the counter.",
+            "prompt" : "You see a stepstool near the counter. Do you want to pick it up?",
             "obtained": "You pick up the stepstool, it slides effortlessly into your backpack...somehow...",
             "triggers": {
               "effect": {

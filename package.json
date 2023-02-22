@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "player1": "node child/index.js",
+    "dog": "node dog/index.js",
     "server": "node server.js"
   },
   "repository": {
@@ -22,6 +23,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "chalk-animation": "^2.0.3",
+    "chance": "^1.1.10",
     "express": "^4.18.2",
     "inquirer": "^8.2.5",
     "prettier": "^2.8.4",

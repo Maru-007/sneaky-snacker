@@ -3,7 +3,7 @@
     {"id": "kidsroom","adjacent": ["hallway","bathroom"]},
     {"id": "bathroom","adjacent": ["hallway","kidsroom","parentsroom"]},
     {"id": "parentsroom","adjacent": ["bathroom","hallway"]},
-    {"id": "hallway","adjacent": ["parents-room","bathroom","kidsroom","garage","livingroom","kitchen"]},
+    {"id": "hallway","adjacent": ["parentsroom","bathroom","kidsroom","garage","livingroom","kitchen"]},
     {"id": "garage","adjacent": ["hallway"]},
     {"id": "livingroom","adjacent": ["hallway","kitchen"]},
     {"id": "kitchen","adjacent": ["livingroom","hallway"]}
@@ -42,10 +42,11 @@
               "id": "navigation",
               "name": "would you like to travel to:",
               "triggers": {
-              "navigate": {
-                 "gotoBathroom": "bathroom",
-                 "gotoHallway": "hallway"
-           },
+
+                "navigate": ["Go to bathroom","Go to hallway"]
+              }
+        },
+
         "distractions": { 
           
               "id": "stereo",
@@ -60,6 +61,7 @@
                   "scoreUpdate": 2
                 }
             }
+
           },
         "dogdistractions": { 
           
@@ -77,6 +79,7 @@
         }
       }
         }
+
       },
    "bathroom": {
         "description": {
@@ -86,7 +89,7 @@
             "id": "Stepstool",
             "altprompt": "You don't see anything useful.",
             "pickedup": false,
-            "prompt" : "You see a stepstool near the counter.",
+            "prompt" : "You see a stepstool near the counter. Do you want to pick it up?",
             "obtained": "You pick up the stepstool, it slides effortlessly into your backpack...somehow...",
             "triggers": {
               "effect": {
@@ -110,11 +113,8 @@
             "id": "navigation",
             "name": "would you like to travel to:",
             "triggers": {
-              "navigate": {
-                "gotoparentsRoom": "parents-room",
-                "gotoHallway": "hallway",
-                "gotokidsRoom": "kids-room"
-              }
+              "navigate": ["Go to parent's room", "Go to hallway", "Go to kid's room"]
+              
             }
           },
         "distractions": {
@@ -183,10 +183,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoHallway": "hallway",
-                    "gotoBathroom": "bathroom"
-                  }
+                  "navigate": ["Go to hallway", "Go to bathroom"]
                 }
               },
         "distractions": {
@@ -251,14 +248,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoBathroom": "bathroom",
-                    "gotokidsRoom": "kids-room",
-                    "gotoparentsRoom": "parentsroom",
-                    "gotolivingRoom": "livingroom",
-                    "gotoGarage": "garage",
-                    "gotoKitchen": "kitchen"
-                  }
+                  "navigate": ["Go to bathroom", "Go to kid's room", "Go to parent's room", "Go to living room", "Go to garage", "Go to kitchen"]
                 }
               },
         "distractions": {
@@ -286,7 +276,7 @@
                 "triggers": {
                   "navigate": {
                     "gotoBathroom": "bathroom",
-                    "gotokidsRoom": "kids-room",
+                    "gotokidsRoom": "kidsroom",
                     "gotoparentsRoom": "parentsroom",
                     "gotolivingRoom": "livingroom",
                     "gotoGarage": "garage",
@@ -307,11 +297,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotolivingRoom": "livingroom",
-                    "gotoHallway": "hallway"
-
-                  }
+                  "navigate": ["Go to living room", "Go to hallway"]     
                 }
               },
         "CookieJar": {
@@ -357,10 +343,8 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoHallway": "hallway",
-                    "gotoKitchen": "kitchen"
-                  }
+                  "navigate": ["Go to hallway", "Go to kitchen"]
+                  
                 }
               },
         "distractions": {
@@ -427,9 +411,7 @@
                 "id": "navigation",
                 "name": "would you like to travel to:",
                 "triggers": {
-                  "navigate": {
-                    "gotoHallway": "hallway"
-                  }
+                  "navigate": ["Go to hallway"]
                 }
               },
         "distractions": {
@@ -458,23 +440,9 @@
                 }
              }
            }
+
            }
+
          }
-}
-
-      
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
+        }
 

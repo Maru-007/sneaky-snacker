@@ -6,6 +6,9 @@ adjacencyLists represent a graph as an array of linked lists.
 The data in 2-10 represents this and is not being used in our game at the moment and may be a candidate for deletion later on.
 
 Rooms:
+
+```
+
   "id of the room":{
         "description":{
             "default": "this is the default prompt when they enter the room
@@ -31,4 +34,6 @@ Rooms:
         triggers.navigate.gotoxxxxx: available rooms from this room
         effects.scoreupdate: score added to players base.
   }
+
   }
+```

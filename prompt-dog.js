@@ -2,7 +2,7 @@ const gameData = require('./game.json');
 
 const kidsroom = {
     name: 'gameplay',
-    message: gameData.rooms.kidsroom.description.dog,
+    message: gameData.rooms.kidsroom.description.default,
     type: 'list',
     choices: ['Navigate', 'Distraction'],
     id: 'kidsroom'

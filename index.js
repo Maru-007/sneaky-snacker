@@ -4,7 +4,7 @@ const { EVENT_NAMES } = require('./utils');
 const inquirer = require('inquirer');
 const prompts = require('./prompt');
 const dogPrompts = require('./prompt-dog');
-const { handleSearch } = require('./src/search/search');
+const { handleSearch, handleDogSearch } = require('./src/search/search');
 const {
   handleChildDistraction,
   handleEvent,
@@ -45,7 +45,7 @@ const welcomePrompt = {
   name: 'gameplay',
   message: 'Welcome to Sneaky Snacker! Would you like to start a new game?',
   type: 'list',
-  choices: ['Yes', 'No'],
+  choices: ['Yes', 'Quit'],
 };
 
 const gamePrompt = {
@@ -240,6 +240,48 @@ function startEventServer() {
         let room = dogPrompts.find((obj) => obj.id === dogCurrentRoom);
         io.emit(EVENT_NAMES.dogQuestions, room);
       }
+      if (choice(answer).search) {
+        const searchPrompt = {
+          name: 'gameSearch',
+          message: handleDogSearch(dogCurrentRoom),
+          type: 'confirm',
+        };
+        io.emit(EVENT_NAMES.dogQuestions, searchPrompt);
+      }
+      if (answer.gameSearch === true) {
+        io.emit(
+          EVENT_NAMES.dogMessage,
+          gameData.rooms[dogCurrentRoom].dogSearch.obtained
+        );
+        gameData.rooms[dogCurrentRoom].dogSearch.pickedup === true;
+        let itemScore =
+          gameData.rooms[dogCurrentRoom].dogSearch.triggers.effect.scoreUpdate;
+        dogModifier += itemScore;
+        console.log(dogModifier);
+        const navigatePrompt = {
+          name: 'gameplay',
+          message: 'Where would you like to go?',
+          type: 'list',
+          choices: handleNavigation(dogCurrentRoom),
+        };
+        io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
+      }
+      if (answer.gameSearch === false) {
+        const navigatePrompt = {
+          name: 'gameplay',
+          message: 'Where would you like to go?',
+          type: 'list',
+          choices: handleNavigation(dogCurrentRoom),
+        };
+        io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
+      }
+      if (choice(answer).cookieJar) {
+        io.emit(EVENT_NAMES.dogQuestions, winCondition());
+        dogCurrentRoom = 'kidsroom';
+      }
+      if (choice(answer).quit) {
+        io.emit(EVENT_NAMES.quit, 'Quit');
+      }
       // if (answer.distraction === true && currentRoom !== dogCurrentRoom) {
       //   playerModifier ++
       // }
@@ -264,7 +306,7 @@ function handleGameplayDogSelection(
       name: 'gameplay',
       message: `Melis is currently in the ${currentRoom}. What would you like to do?`,
       type: 'list',
-      choices: ['Navigate', 'Distraction'],
+      choices: ['Navigate', 'Search', 'Distraction'],
     };
     return [EVENT_NAMES.dogQuestions, helpMelis];
     // io.emit(EVENT_NAMES.dogQuestions, helpMelis);

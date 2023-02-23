@@ -232,7 +232,7 @@
               },
         "dogSearch": {
                 "id": "squeaky",
-                "prompt": "You see a squeaky",
+                "prompt": "You see a squeaky toy. Would you like to pick it up?",
                 "altprompt":"You don't see anything useful.",
                 "pickedup": false,
                 "obtained": "Your favorite toy. You pick it up!",
@@ -382,7 +382,7 @@
         "Search": {
                 "id": "Baseball Mitt",
                 "altprompt":"You don't see anything useful.",
-                "Prompt": "You kick a box and notice a baseball mitt. Do you pick it up?",
+                "prompt": "You kick a box and notice a baseball mitt. Do you pick it up?",
                 "pickedup":false,
                 "obtained": "You've been looking for this...it wont help yo much now...you pick it up anyways",
                 "triggers": {
@@ -395,7 +395,7 @@
         "dogSearch": {
                 "id": "tennisball",
                 "altprompt":"You don't see anything useful.",
-                "Prompt": "A tennis ball...your tennis ball. You've been looking for this. Do you pick it up now?",
+                "prompt": "A tennis ball...your tennis ball. You've been looking for this. Do you pick it up now?",
                 "pickedup":false,
                 "obtained": "You ...put it in you pocket?",
                 "triggers": {

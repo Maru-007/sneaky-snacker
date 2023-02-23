@@ -20,6 +20,14 @@ function handleSearch (currentRoom) {
     // }
 }
 
+function handleDogSearch (dogCurrentRoom) {
+    const prompt = gameData.rooms[dogCurrentRoom].dogSearch.prompt;
+    return prompt;
+    // if (emission.search.pickedup === false) {
+    //     return prompt // needs to be socket emission back to console prompt
+    // }
+}
+
 // function pickup (string, emission) {
 //     const prompt = emission.search.obtained
 //     if (string === "yes") {
@@ -33,4 +41,4 @@ function handleSearch (currentRoom) {
 // console.log()
 // Current room could equal "kids-room" JSON object
 
-module.exports = { handleSearch }
+module.exports = { handleSearch, handleDogSearch }

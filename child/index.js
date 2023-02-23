@@ -4,7 +4,15 @@ const socket = io('ws://localhost:3001');
 const inquirer = require("inquirer");
 
 function startPlayer1() {
-  socket.emit(EVENT_NAMES.playerReady, 'player1');
+
+  socket.emit(EVENT_NAMES.childReady);
+  console.log("child is ready", socket.id)
+  socket.on(EVENT_NAMES.quit, () => {
+    process.exit();
+  })
+  socket.on(EVENT_NAMES.message, (message) => {
+    console.log(message);
+  })
   socket.on(EVENT_NAMES.questionsReady, (question) => {
     inquirer
       .prompt([
@@ -16,14 +24,14 @@ function startPlayer1() {
         },
       ])
       .then((answer) => {
-        console.log('Player1 answer:', answer);
+        console.log('Melis answer:', answer);
         socket.emit(EVENT_NAMES.selection, answer);
       });
   });
-
-  // socket.on(EVENT_NAMES.answer, (payload) => {
-  //   console.log(payload);
-  // });
 }
+
+
+
+
 
 startPlayer1();

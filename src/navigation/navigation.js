@@ -65,8 +65,12 @@ function handleNavigation(direction) {
     return options;
 }
 
+function handleNPCNavigation (distractionRoom) {
+    npcLocation = graph[distractionRoom]
+    return npcLocation
+}
 
 
 
-module.exports = { handleNavigation };
+module.exports = { handleNavigation, handleNPCNavigation };
 // send handleNavigation options back along with room Id

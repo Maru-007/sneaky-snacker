@@ -143,7 +143,7 @@ function startEventServer() {
         let moveNPC = handleNPCNavigation(currentRoom);
         const randomEventCheck = Math.random();
         console.log(randomEventCheck);
-        randomEventCheck < 0.6
+        randomEventCheck < 0.8
           ? io.emit(EVENT_NAMES.questionsReady, room)
           : io.emit(EVENT_NAMES.questionsReady, NPC(currentRoom, moveNPC));
       }
@@ -232,7 +232,7 @@ function startEventServer() {
         let moveNPC = handleNPCNavigation(dogCurrentRoom);
         const randomEventCheck = Math.random();
         console.log(randomEventCheck);
-        randomEventCheck < 0.6
+        randomEventCheck < 0.8
           ? io.emit(EVENT_NAMES.dogQuestions, room)
           : io.emit(EVENT_NAMES.dogQuestions, NPC(dogCurrentRoom, moveNPC));
       }

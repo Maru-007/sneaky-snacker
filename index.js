@@ -1,9 +1,9 @@
 const { Server } = require('socket.io');
 const io = new Server(3001);
-const { EVENT_NAMES } = require('./utils');
+const { EVENT_NAMES } = require('./src/utils');
 const inquirer = require('inquirer');
-const prompts = require('./prompt');
-const dogPrompts = require('./prompt-dog');
+const prompts = require('./src/prompt');
+const dogPrompts = require('./src/prompt-dog');
 const { handleSearch, handleDogSearch } = require('./src/search/search');
 const {
   handleChildDistraction,
@@ -11,8 +11,8 @@ const {
   handleDogDistraction,
   handleDogEvent,
 } = require('./src/distraction/distraction');
-const gameData = require('./game.json');
-const winCondition = require('./src/cookieJar');
+const gameData = require('./src/game.json');
+const { winCondition } = require('./src/cookieJar');
 const chance = require('chance')();
 const {
   handleNavigation,
@@ -45,7 +45,7 @@ const welcomePrompt = {
   name: 'gameplay',
   message: 'Welcome to Sneaky Snacker! Would you like to start a new game?',
   type: 'list',
-  choices: ['Yes', 'Quit'],
+  choices: ['Yes', 'No'],
 };
 
 const gamePrompt = {
@@ -53,7 +53,7 @@ const gamePrompt = {
   message:
     'You are currently playing as Melis, the child. You will be given options to navigate throughout the house, search for objects, and create distractions. Your goal is to reach the snacks before dad catches you.',
   type: 'list',
-  choices: ['Ok', 'Quit'],
+  choices: ['Ok'],
 };
 
 const dogPrompt = {
@@ -61,7 +61,7 @@ const dogPrompt = {
   message:
     "You are now playing as Melis's dog, Diego. You will be given options to navigate throughout the house, search for objects, and create distractions. Your goal is to help Melis get cookies while avoiding being caught by dad. ",
   type: 'list',
-  choices: ['Ok', 'Quit'],
+  choices: ['Ok'],
 };
 
 function onChildReady(player) {
@@ -84,28 +84,31 @@ function choice(answer) {
     dontDistract: answer.gameplay === "Don't Distract",
     search: answer.gameplay === 'Search',
     cookieJar: answer.gameplay === 'Cookie Jar',
-    quit: answer.gameplay === 'Quit',
+    quit: answer.gameplay === 'No',
   };
   return gameChoices;
 }
-
+let socketConnections = 0;
 function startEventServer() {
-  // navigateDad();
+  
 
   io.on('connection', (socket) => {
-    console.log('We have a new connection:', socket.id);
+    
 
-    socket.on(EVENT_NAMES.childReady, () => onChildReady(socket));
-    socket.on(EVENT_NAMES.dogReady, () => onDogReady(socket));
+    socket.on(EVENT_NAMES.childReady, () => {
+      onChildReady(socket);
+      socketConnections++;
+    });
+    socket.on(EVENT_NAMES.dogReady, () => {
+      onDogReady(socket);
+      socketConnections++;
+    });
 
     socket.on(EVENT_NAMES.selection, (answer) => {
-      console.log(answer.gameplay);
       if (choice(answer).yes) {
-        console.log(gamePrompt);
         io.emit(EVENT_NAMES.questionsReady, gamePrompt);
       }
       if (choice(answer).ok) {
-        console.log(prompts[0]);
         io.emit(EVENT_NAMES.questionsReady, prompts[0]);
       }
       if (choice(answer).navigate) {
@@ -137,12 +140,12 @@ function startEventServer() {
         let itemScore =
           gameData.rooms[currentRoom].distractions.triggers.effect.scoreUpdate;
         playerModifier += itemScore;
-        console.log(playerModifier);
+        console.log(playerModifier, " Player Modifier Score");
         let room = prompts.find((obj) => obj.id === currentRoom);
         io.emit(EVENT_NAMES.message, handleEvent(currentRoom));
         let moveNPC = handleNPCNavigation(currentRoom);
         const randomEventCheck = Math.random();
-        console.log(randomEventCheck);
+        console.log(randomEventCheck, " Random Event Check - 80% Pass/20% Fail");
         randomEventCheck < 0.8
           ? io.emit(EVENT_NAMES.questionsReady, room)
           : io.emit(EVENT_NAMES.questionsReady, NPC(currentRoom, moveNPC));
@@ -168,7 +171,7 @@ function startEventServer() {
         let itemScore =
           gameData.rooms[currentRoom].Search.triggers.effect.scoreUpdate;
         playerModifier += itemScore;
-        console.log(playerModifier);
+        console.log(playerModifier, " Player Modifier Score");
         const navigatePrompt = {
           name: 'gameplay',
           message: 'Where would you like to go?',
@@ -187,7 +190,10 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       }
       if (choice(answer).cookieJar) {
-        io.emit(EVENT_NAMES.questionsReady, winCondition());
+        socketConnections >= 2 ? 
+        io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier, dogModifier)) 
+        : io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier));
+        
         currentRoom = 'kidsroom';
       }
       if (choice(answer).quit) {
@@ -196,7 +202,6 @@ function startEventServer() {
     });
 
     socket.on(EVENT_NAMES.dogSelection, (answer) => {
-      console.log(answer.gameplay);
       const handleDog = handleGameplayDogSelection(
         answer,
         dogPrompt,
@@ -210,7 +215,6 @@ function startEventServer() {
         let room = dogPrompts.find((obj) => obj.id === answer.gameplay);
         io.emit(EVENT_NAMES.dogQuestions, room);
         dogCurrentRoom = answer.gameplay;
-        console.log(dogCurrentRoom);
       }
       if (choice(answer).distraction) {
         const dogDistraction = {
@@ -226,12 +230,12 @@ function startEventServer() {
           gameData.rooms[dogCurrentRoom].dogdistractions.triggers.effect
             .scoreUpdate;
         dogModifier += itemScore;
-        console.log(dogModifier);
+        console.log(dogModifier, " Dog Modifier Score");
         let room = dogPrompts.find((obj) => obj.id === dogCurrentRoom);
         io.emit(EVENT_NAMES.dogMessage, handleDogEvent(dogCurrentRoom));
         let moveNPC = handleNPCNavigation(dogCurrentRoom);
         const randomEventCheck = Math.random();
-        console.log(randomEventCheck);
+        console.log(randomEventCheck, " Random Event Check - 80% Pass/20% Fail");
         randomEventCheck < 0.8
           ? io.emit(EVENT_NAMES.dogQuestions, room)
           : io.emit(EVENT_NAMES.dogQuestions, NPC(dogCurrentRoom, moveNPC));
@@ -257,7 +261,7 @@ function startEventServer() {
         let itemScore =
           gameData.rooms[dogCurrentRoom].dogSearch.triggers.effect.scoreUpdate;
         dogModifier += itemScore;
-        console.log(dogModifier);
+        console.log(dogModifier, " Dog Modifier Score");
         const navigatePrompt = {
           name: 'gameplay',
           message: 'Where would you like to go?',
@@ -276,18 +280,12 @@ function startEventServer() {
         io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
       }
       if (choice(answer).cookieJar) {
-        io.emit(EVENT_NAMES.dogQuestions, winCondition());
+        io.emit(EVENT_NAMES.dogQuestions, winCondition(playerModifier, dogModifier));
         dogCurrentRoom = 'kidsroom';
       }
       if (choice(answer).quit) {
         io.emit(EVENT_NAMES.quit, 'Quit');
       }
-      // if (answer.distraction === true && currentRoom !== dogCurrentRoom) {
-      //   playerModifier ++
-      // }
-      //   if (answer.distraction === true && currentRoom === dogCurrentRoom) {
-      //   dadModifier ++
-      // }
     });
   });
 }
@@ -299,7 +297,6 @@ function handleGameplayDogSelection(
 ) {
   if (choice(answer).yes) {
     return [EVENT_NAMES.dogQuestions, dogPrompt];
-    // io.emit(EVENT_NAMES.dogQuestions, dogPrompt);
   }
   if (choice(answer).ok) {
     const helpMelis = {
@@ -309,10 +306,9 @@ function handleGameplayDogSelection(
       choices: ['Navigate', 'Search', 'Distraction'],
     };
     return [EVENT_NAMES.dogQuestions, helpMelis];
-    // io.emit(EVENT_NAMES.dogQuestions, helpMelis);
+    
   }
   if (choice(answer).navigate) {
-    console.log(dogCurrentRoom);
     const navigatePrompt = {
       name: 'gameplay',
       message: 'Where would you like to go?',
@@ -320,19 +316,7 @@ function handleGameplayDogSelection(
       choices: handleNavigation(dogCurrentRoom),
     };
     return [EVENT_NAMES.dogQuestions, navigatePrompt];
-    // io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
   }
 }
-
-// function navigateDad() {
-//   console.log('Dad is currently in:', dadCurrentRoom);
-//   let doors = handleNavigation(dadCurrentRoom);
-//   // navigate to a random room accessible from current room
-//   let randomIndex = Math.floor(Math.random() * doors.length);
-//   let randomRoom = doors[randomIndex];
-//   dadCurrentRoom = randomRoom;
-
-//   setTimeout(navigateDad, chance.integer({ min: 10000, max: 20000 }));
-// }
 
 startEventServer();

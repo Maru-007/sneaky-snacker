@@ -6,9 +6,10 @@
   "scripts": {
     "test": "jest",
     "start": "node index.js",
-    "player1": "node child/index.js",
-    "dog": "node dog/index.js",
-    "server": "node server.js"
+    "player1": "node src/child/index.js",
+    "dog": "node src/dog/index.js",
+    "edit": "prettier --write src/ && --write child/ && --write dog/",
+    "lint": "prettier --check src/ && eslint src/ && --check child/ && eslint child/ && --check dog/ && eslint dog/"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,7 @@
   },
   "homepage": "https://github.com/Maru-007/sneaky-snacker#readme",
   "dependencies": {
-    "ascii-art": "^2.8.5",
+    "ascii-art": "^1.5.1",
     "chalk": "^4.1.2",
     "chalk-animation": "^2.0.3",
     "chance": "^1.1.10",

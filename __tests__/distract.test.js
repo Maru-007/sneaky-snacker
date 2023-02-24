@@ -1,4 +1,4 @@
-const gameData = require('../game.json');
+const gameData = require('../src/game.json');
 const { handleChildDistraction, handleEvent } = require('../src/distraction/distraction.js');
 
 describe('handleChildDistraction', () => {

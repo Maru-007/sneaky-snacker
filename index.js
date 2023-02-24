@@ -37,7 +37,6 @@ let dadModifier = 10;
 
 
 
-let currentRoom = 'kidsroom';
 
 const distraction = {
   name: 'gameplay',

@@ -27,7 +27,7 @@ let draw = {
   choices: ['Yes', 'No'],
 };
 
-function winCondition() {
+function winCondition(playerBase, playerModifier, dadBase, dadModifier) {
     const playerScore = playerBase + playerModifier + Math.floor(Math.random() * 20);
     const dadScore = dadBase + dadModifier + Math.floor(Math.random() * 20);
     if (playerScore > dadScore) {

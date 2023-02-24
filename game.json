@@ -1,27 +1,16 @@
 {
   "adjacencyList": [
-    { "id": "kidsroom", "adjacent": ["hallway", "bathroom"] },
-    { "id": "bathroom", "adjacent": ["hallway", "kidsroom", "parentsroom"] },
-    { "id": "parentsroom", "adjacent": ["bathroom", "hallway"] },
-    {
-      "id": "hallway",
-      "adjacent": [
-        "parentsroom",
-        "bathroom",
-        "kidsroom",
-        "garage",
-        "livingroom",
-        "kitchen"
-      ]
-    },
-    { "id": "garage", "adjacent": ["hallway"] },
-    { "id": "livingroom", "adjacent": ["hallway", "kitchen"] },
-    { "id": "kitchen", "adjacent": ["livingroom", "hallway"] }
+    {"id": "kidsroom","adjacent": ["hallway","bathroom"]},
+    {"id": "bathroom","adjacent": ["hallway","kidsroom","parentsroom"]},
+    {"id": "parentsroom","adjacent": ["bathroom","hallway"]},
+    {"id": "hallway","adjacent": ["parentsroom","bathroom","kidsroom","garage","livingroom","kitchen"]},
+    {"id": "garage","adjacent": ["hallway"]},
+    {"id": "livingroom","adjacent": ["hallway","kitchen"]},
+    {"id": "kitchen","adjacent": ["livingroom","hallway"]}
   ],
 
   "rooms": {
     "kidsroom": {
-
         "description": {
              "default": "You're in you're room. You're surrounded by your bed and toys cast carelessly on the floor. A hunger grows in you. It is time for cookies."
              },
@@ -90,27 +79,22 @@
         }
       }
         },
-
    "bathroom": {
         "description": {
             "default": "The bathroom is brightly lit. Makeup and and appliances are plugged in everywhere. There shower has a slow drip and there are hair ties all over the floor."
-
           },
-          "effect": {
-            "scoreUpdate": 2
-          }
-        }
-      },
-      "dogdistractions": {
-        "id": "pillow",
-        "prompt": "Out of the corner of your eye you see a threat...a pillow. Do you attack?",
-        "event": "you pounce on the pillow and rip it to shreds. Feathers rain down around you. Victory.",
-        "triggers": {
-          "navigate": {
-            "gotoBathroom": "bathroom",
-            "gotoHallway": "hallway"
+        "Search": {
+            "id": "Stepstool",
+            "altprompt": "You don't see anything useful.",
+            "pickedup": false,
+            "prompt" : "You see a stepstool near the counter. Do you want to pick it up?",
+            "obtained": "You pick up the stepstool, it slides effortlessly into your backpack...somehow...",
+            "triggers": {
+              "effect": {
+                "scoreUpdate": 1
+              }
+            }
           },
-
         "dogSearch": {
             "id": "toiletpaper",
             "altprompt": "You don't see anything useful.",
@@ -302,28 +286,29 @@
                 }
               }
             },
+
     "kitchen": {
-      "description": {
-        "default": "The kitchen. The vessel of your desires. On the counter, a cookie jar. Inside that jar: scrumptuous deliciousness..."
-      },
-      "navigation": {
-        "id": "navigation",
-        "name": "would you like to travel to:",
-        "triggers": {
-          "navigate": ["Go to living room", "Go to hallway"]
-        }
-      },
-      "CookieJar": {
-        "id": "cookiejar",
-        "name": "You attempt to open the cookie jar",
-        "triggers": {
-          "effect": {
-            "win": "You open the cookie jar and begin devouring cookies. The victory may be pyrric in the long run. But right now it, like the cookies, is delicious.",
-            "lose": "Just as you begin to open the cookies, your father walks in and catches you. 'What do you think you are doing?' You're caught...games over."
-          }
-        }
-      }
-    },
+        "description": {
+                "default": "The kitchen. The vessel of your desires. On the counter, a cookie jar. Inside that jar: scrumptuous deliciousness..."
+              },
+        "navigation": {
+                "id": "navigation",
+                "name": "would you like to travel to:",
+                "triggers": {
+                  "navigate": ["Go to living room", "Go to hallway"]     
+                }
+              },
+        "CookieJar": {
+                "id": "cookiejar",
+                "name": "You attempt to open the cookie jar",
+                "triggers": {
+                  "effect": {
+                    "win": "You open the cookie jar and begin devouring cookies. The victory may be pyrric in the long run. But right now it, like the cookies, is delicious.",
+                    "lose": "Just as you begin to open the cookies, your father walks in and catches you. 'What do you think you are doing?' You're caught...games over."
+                  }
+                }
+              }
+            },
     "livingroom": {
         "description": {
                 "default": "The living room has several chairs arranged around a TV. The lights are off and the TV is on. You can see Dad sitting in his chair, sleepy, watching the news."
@@ -457,5 +442,4 @@
            }
 
          }
-
-}
+        }

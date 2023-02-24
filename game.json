@@ -100,7 +100,7 @@
             "altprompt": "You don't see anything useful.",
             "pickedup": false,
             "prompt" : "You see some toilet paper dangling from its roll. Do you take it?",
-            "obtained": "With a sudden lunge, you spring forward. Teeth flashing as you snatch the toilet paper from its resting place. With a wild and feral energy you tear into the soft white sheets, shredding them into confeting and flinging them haphazardly around the bathroom. You feel strange and surreal. You, a once-tame animal now feel wild and frenzied as you tear apart your prey. As you near claiming victory, something curious begins to happen. Gradually, almost imperceptibly, the ferocity begins to fade, replaced by a contentment and satisfaction.",
+            "obtained": "With a sudden lunge, you spring forward. Teeth flashing as you snatch the toilet paper from its resting place. With a wild and feral energy you tear into the soft white sheets, shredding them into confetti and flinging them haphazardly around the bathroom. You feel strange and surreal. You, a once-tame animal now feel wild and frenzied as you tear apart your prey. As you are near claiming victory, something curious begins to happen. Gradually, almost imperceptibly, the ferocity begins to fade, replaced by a contentment and satisfaction.",
             "triggers": {
               "effect": {
                 "scoreUpdate": 1

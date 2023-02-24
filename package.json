@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Maru-007/sneaky-snacker#readme",
   "dependencies": {
+    "ascii-art": "^2.8.5",
     "chalk": "^4.1.2",
     "chalk-animation": "^2.0.3",
     "chance": "^1.1.10",

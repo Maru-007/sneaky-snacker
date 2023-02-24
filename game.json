@@ -427,7 +427,7 @@
              },
         "dogdistractions": {
               "id": "mouse",
-              "prompt":"A mouse! chase?",
+              "prompt":"A mouse! Chase?",
               "event": "You start chasing a mouse. You knock over boxes, golf clubs, and an aluminum ladder. The mouse gets away.",
               "triggers": {
                 "navigate": {

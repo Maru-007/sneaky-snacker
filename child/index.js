@@ -4,9 +4,8 @@ const socket = io('ws://localhost:3001');
 const inquirer = require("inquirer");
 
 function startPlayer1() {
-
   socket.emit(EVENT_NAMES.childReady);
-  console.log("child is ready", socket.id)
+  console.log("Melis is ready!")
   socket.on(EVENT_NAMES.quit, () => {
     process.exit();
   })
@@ -29,9 +28,6 @@ function startPlayer1() {
       });
   });
 }
-
-
-
 
 
 startPlayer1();

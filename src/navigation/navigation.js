@@ -40,7 +40,6 @@ newRooms()
 
 
 let currentLocation;
-console.log(currentLocation);
 
 // Direction = input of selected adjacent value, for kidsroom, hallway || bathroom
 // let direction = "hallway"

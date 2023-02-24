@@ -7,6 +7,7 @@ const EVENT_NAMES = {
   selection: 'selection',
   dogSelection: 'dogSelection',
   message: 'message',
+  dogMessage: 'dogMessage',
   //need navigate event
   //this event will come from the server giving the user a choice of where to navigate
   navigate: 'navigate',

@@ -10,5 +10,15 @@ function handleEvent (currentRoom) {
   return prompt;
 }
 
+function handleDogDistraction (dogCurrentRoom) {
+  const prompt = gameData.rooms[dogCurrentRoom].dogdistractions.prompt;
+  return prompt;
+}
 
-module.exports = { handleChildDistraction, handleEvent };
+function handleDogEvent (dogCurrentRoom) {
+  const prompt = gameData.rooms[dogCurrentRoom].dogdistractions.event;
+  return prompt;
+}
+
+
+module.exports = { handleChildDistraction, handleEvent, handleDogDistraction, handleDogEvent };

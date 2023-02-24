@@ -1,6 +1,7 @@
 const gameData = require("../game.json");
 const { handleNavigation, handleNPCNavigation } = require('../src/navigation/navigation.js');
 
+
 describe('handleNavigation', () => {
     it('should return the doors of the parentsroom when direction is parentsroom', () => {
       const direction = 'parentsroom';
@@ -50,6 +51,8 @@ describe('handleNavigation', () => {
           handleNavigation(direction);
         }).toThrow(`Cannot read properties of undefined (reading 'doors')`);
       });
+
+    it('')
   });
 
   

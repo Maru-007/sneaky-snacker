@@ -90,7 +90,7 @@ function choice(answer) {
 }
 
 function startEventServer() {
-  navigateDad();
+  // navigateDad();
 
   io.on('connection', (socket) => {
     console.log('We have a new connection:', socket.id);
@@ -324,15 +324,15 @@ function handleGameplayDogSelection(
   }
 }
 
-function navigateDad() {
-  console.log('Dad is currently in:', dadCurrentRoom);
-  let doors = handleNavigation(dadCurrentRoom);
-  // navigate to a random room accessible from current room
-  let randomIndex = Math.floor(Math.random() * doors.length);
-  let randomRoom = doors[randomIndex];
-  dadCurrentRoom = randomRoom;
+// function navigateDad() {
+//   console.log('Dad is currently in:', dadCurrentRoom);
+//   let doors = handleNavigation(dadCurrentRoom);
+//   // navigate to a random room accessible from current room
+//   let randomIndex = Math.floor(Math.random() * doors.length);
+//   let randomRoom = doors[randomIndex];
+//   dadCurrentRoom = randomRoom;
 
-  setTimeout(navigateDad, chance.integer({ min: 10000, max: 20000 }));
-}
+//   setTimeout(navigateDad, chance.integer({ min: 10000, max: 20000 }));
+// }
 
 startEventServer();

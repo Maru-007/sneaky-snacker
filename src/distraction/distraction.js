@@ -1,24 +1,28 @@
-const gameData = require('../../game.json');
+const gameData = require('../game.json');
 
-function handleChildDistraction (currentRoom) {
-    const prompt = gameData.rooms[currentRoom].distractions.prompt;
-    return prompt;
+function handleChildDistraction(currentRoom) {
+  const prompt = gameData.rooms[currentRoom].distractions.prompt;
+  return prompt;
 }
 
-function handleEvent (currentRoom) {
+function handleEvent(currentRoom) {
   const prompt = gameData.rooms[currentRoom].distractions.event;
   return prompt;
 }
 
-function handleDogDistraction (dogCurrentRoom) {
+function handleDogDistraction(dogCurrentRoom) {
   const prompt = gameData.rooms[dogCurrentRoom].dogdistractions.prompt;
   return prompt;
 }
 
-function handleDogEvent (dogCurrentRoom) {
+function handleDogEvent(dogCurrentRoom) {
   const prompt = gameData.rooms[dogCurrentRoom].dogdistractions.event;
   return prompt;
 }
 
-
-module.exports = { handleChildDistraction, handleEvent, handleDogDistraction, handleDogEvent };
+module.exports = {
+  handleChildDistraction,
+  handleEvent,
+  handleDogDistraction,
+  handleDogEvent,
+};

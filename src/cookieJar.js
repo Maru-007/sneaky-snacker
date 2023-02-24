@@ -1,20 +1,18 @@
+const gameData = require('./game.json');
 let playerBase = 15;
-let playerModifier = 10;
-
 let dadBase = 15;
 let dadModifier = 10;
 
-
 let win = {
   name: 'gameplay',
-  message: 'You win! Do you want to play again?',
+  message: gameData.rooms.kitchen.CookieJar.triggers.effect.win,
   type: 'list',
   choices: ['Yes', 'No'],
 };
 
 let lose = {
   name: 'gameplay',
-  message: 'You Lose :( Do you want to try again?',
+  message: gameData.rooms.kitchen.CookieJar.triggers.effect.lose,
   type: 'list',
   choices: ['Yes', 'No'],
 };
@@ -27,21 +25,40 @@ let draw = {
   choices: ['Yes', 'No'],
 };
 
-function winCondition(playerBase, playerModifier, dadBase, dadModifier) {
-    const playerScore = playerBase + playerModifier + Math.floor(Math.random() * 20);
-    const dadScore = dadBase + dadModifier + Math.floor(Math.random() * 20);
-    if (playerScore > dadScore) {
-        
-        console.log("PLAYER", playerScore, dadScore, "DAD")
-        return win;
-    } else if (playerScore < dadScore) {
-        console.log("PLAYER", playerScore, dadScore, "DAD")
-        return lose;
-    } else if (playerScore === dadScore) {
-        console.log("PLAYER", playerScore, dadScore, "DAD")
-        return draw;
-    }
+function winCondition(playerModifier, dogModifier) {
+  let playerScore = playerBase + playerModifier;
+  if (dogModifier) {
+    console.log('Dog modifier is present');
+    playerScore = playerBase + playerModifier + dogModifier;
+  }
+
+  const dadScore = dadBase + dadModifier + Math.floor(Math.random() * 15);
+  if (playerScore > dadScore) {
+    console.log('PLAYER', playerScore, dadScore, 'DAD');
+    return win;
+  } else if (playerScore < dadScore) {
+    console.log('PLAYER', playerScore, dadScore, 'DAD');
+    return lose;
+  } else if (playerScore === dadScore) {
+    console.log('PLAYER', playerScore, dadScore, 'DAD');
+    return draw;
+  }
 }
 
-module.exports = winCondition;
+function winConditionTest(playerBase, playerModifier, dadBase, dadModifier) {
+  const playerScore =
+    playerBase + playerModifier + Math.floor(Math.random() * 20);
+  const dadScore = dadBase + dadModifier + Math.floor(Math.random() * 20);
+  if (playerScore > dadScore) {
+    console.log('PLAYER', playerScore, dadScore, 'DAD');
+    return win;
+  } else if (playerScore < dadScore) {
+    console.log('PLAYER', playerScore, dadScore, 'DAD');
+    return lose;
+  } else if (playerScore === dadScore) {
+    console.log('PLAYER', playerScore, dadScore, 'DAD');
+    return draw;
+  }
+}
 
+module.exports = { winConditionTest, winCondition };

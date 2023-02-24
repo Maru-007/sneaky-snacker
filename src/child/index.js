@@ -1,18 +1,18 @@
 const { EVENT_NAMES } = require('../utils');
 const { io } = require('socket.io-client');
 const socket = io('ws://localhost:3001');
-const inquirer = require("inquirer");
+const inquirer = require('inquirer');
 
-function startDog() {
-  socket.emit(EVENT_NAMES.dogReady);
-  console.log("Diego is ready!")
+function startPlayer1() {
+  socket.emit(EVENT_NAMES.childReady);
+  console.log('Melis is ready!');
   socket.on(EVENT_NAMES.quit, () => {
     process.exit();
-  })
-  socket.on(EVENT_NAMES.dogMessage, (dogMessage) => {
-    console.log(dogMessage);
-  })
-  socket.on(EVENT_NAMES.dogQuestions, (question) => {
+  });
+  socket.on(EVENT_NAMES.message, (message) => {
+    console.log(message);
+  });
+  socket.on(EVENT_NAMES.questionsReady, (question) => {
     inquirer
       .prompt([
         {
@@ -23,11 +23,9 @@ function startDog() {
         },
       ])
       .then((answer) => {
-        console.log('Diego answer:', answer);
-        socket.emit(EVENT_NAMES.dogSelection, answer);
+        socket.emit(EVENT_NAMES.selection, answer);
       });
   });
-
 }
 
-startDog();
+startPlayer1();

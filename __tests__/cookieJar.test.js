@@ -1,4 +1,4 @@
-const winCondition = require('../src/cookieJar');
+const { winConditionTest } = require('../src/cookieJar');
 
 describe('winCondition', () => {
   beforeEach(() => {
@@ -16,12 +16,12 @@ describe('winCondition', () => {
     let dadModifier = 10;
     let expected = {
       name: 'gameplay',
-      message: 'You win! Do you want to play again?',
+      message: "You open the cookie jar and begin devouring cookies. The victory may be pyrric in the long run. But right now it, like the cookies, is delicious. Play again?",
       type: 'list',
       choices: ['Yes', 'No'],
     };
 
-    const actual = winCondition(playerBase, playerModifier, dadBase, dadModifier);
+    const actual = winConditionTest(playerBase, playerModifier, dadBase, dadModifier);
     expect(actual).toEqual(expected);
   });
 
@@ -32,12 +32,12 @@ describe('winCondition', () => {
     let dadModifier = 100;
     let expected = {
       name: 'gameplay',
-      message: 'You Lose :( Do you want to try again?',
+      message: "Just as you begin to open the cookies, your father walks in and catches you. 'What do you think you are doing?' You're caught...games over. Play again?",
       type: 'list',
       choices: ['Yes', 'No'],
     };
 
-    const actual = winCondition(playerBase, playerModifier, dadBase, dadModifier);
+    const actual = winConditionTest(playerBase, playerModifier, dadBase, dadModifier);
     expect(actual).toEqual(expected);
   });
 
@@ -54,8 +54,9 @@ describe('winCondition', () => {
       choices: ['Yes', 'No'],
     };
 
-    const actual = winCondition(playerBase, playerModifier, dadBase, dadModifier);
+    const actual = winConditionTest(playerBase, playerModifier, dadBase, dadModifier);
     expect(actual).toEqual(expected);
   });
 });
 
+afterAll(() => setTimeout(() => process.exit(), 10))

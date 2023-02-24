@@ -245,15 +245,15 @@ function startEventServer() {
     }
   }
 
-// function navigateDad() {
-//   console.log('Dad is currently in:', dadCurrentRoom);
-//   let doors = handleNavigation(dadCurrentRoom);
-//   // navigate to a random room accessible from current room
-//   let randomIndex = Math.floor(Math.random() * doors.length);
-//   let randomRoom = doors[randomIndex];
-//   dadCurrentRoom = randomRoom;
+function navigateDad() {
+  console.log('Dad is currently in:', dadCurrentRoom);
+  let doors = handleNavigation(dadCurrentRoom);
+  // navigate to a random room accessible from current room
+  let randomIndex = Math.floor(Math.random() * doors.length);
+  let randomRoom = doors[randomIndex];
+  dadCurrentRoom = randomRoom;
 
-//   setTimeout(navigateDad, chance.integer({min: 5000, max: 10000}))
-// }
+  setTimeout(navigateDad, chance.integer({min: 5000, max: 10000}))
+}
 
-// startEventServer();
+startEventServer();

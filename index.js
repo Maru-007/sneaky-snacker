@@ -191,7 +191,8 @@ function startEventServer() {
       }
       if (choice(answer).cookieJar) {
         socketConnections >= 2 ? 
-        io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier, dogModifier)) 
+        io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier, dogModifier)) &&
+        io.emit(EVENT_NAMES.dogQuestions, winCondition(playerModifier, dogModifier))
         : io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier));
         
         currentRoom = 'kidsroom';
@@ -280,7 +281,10 @@ function startEventServer() {
         io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
       }
       if (choice(answer).cookieJar) {
-        io.emit(EVENT_NAMES.dogQuestions, winCondition(playerModifier, dogModifier));
+        socketConnections >= 2 ? 
+        io.emit(EVENT_NAMES.dogQuestions, winCondition(playerModifier, dogModifier)) &&
+        io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier, dogModifier))
+        : io.emit(EVENT_NAMES.dogQuestions, winCondition(dogModifier));
         dogCurrentRoom = 'kidsroom';
       }
       if (choice(answer).quit) {

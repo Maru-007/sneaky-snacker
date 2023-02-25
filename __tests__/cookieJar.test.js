@@ -16,7 +16,7 @@ describe('winCondition', () => {
     let dadModifier = 10;
     let expected = {
       name: 'gameplay',
-      message: "You open the cookie jar and begin devouring cookies. The victory may be pyrric in the long run. But right now it, like the cookies, is delicious. Play again?",
+      message: "You open the cookie jar and begin devouring cookies. The victory may be pyrrhic in the long run. But right now it, like the cookies, is delicious. Play again?",
       type: 'list',
       choices: ['Yes', 'No'],
     };
@@ -59,4 +59,3 @@ describe('winCondition', () => {
   });
 });
 
-afterAll(() => setTimeout(() => process.exit(), 10))

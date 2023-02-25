@@ -1,4 +1,4 @@
-const gameData = require("../game.json");
+const gameData = require("../src/game.json");
 const { handleNavigation, handleNPCNavigation } = require('../src/navigation/navigation.js');
 
 
@@ -52,5 +52,5 @@ describe('handleNavigation', () => {
         }).toThrow(`Cannot read properties of undefined (reading 'doors')`);
       });
 
-    it('')
+    // it('')
   });

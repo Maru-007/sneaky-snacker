@@ -1,4 +1,4 @@
-const gameData = require("../game.json");
+const gameData = require("../src/game.json");
 const { handleSearch, handleDogSearch } = require("../src/search/search.js");
 
 describe('handleSearch', () => {

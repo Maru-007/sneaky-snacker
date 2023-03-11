@@ -1,5 +1,13 @@
 const { Server } = require('socket.io');
-const io = new Server(3001);
+
+const io = new Server({
+  cors: {
+    origin: "http://localhost:3001",
+  },
+});
+
+io.listen(4000);
+
 const { EVENT_NAMES } = require('./utils');
 const inquirer = require('inquirer');
 const prompts = require('./prompt');

@@ -1,5 +1,12 @@
 const { Server } = require('socket.io');
-const io = new Server(3001);
+const io = new Server({
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.listen(4000);
+
 const { EVENT_NAMES } = require('./src/utils');
 const inquirer = require('inquirer');
 const prompts = require('./src/prompt');
@@ -89,11 +96,22 @@ function choice(answer) {
   return gameChoices;
 }
 let socketConnections = 0;
-function startEventServer() {
-  
 
+function handleHello() {
+  console.log("client says hello");
+  io.emit("response ", "Hi from server!");
+}
+
+function handleConnection(socket) {
+  console.log("have a new connection ", socket.id);
+  socket.on("hello ", handleHello);
+}
+
+function startEventServer() {
   io.on('connection', (socket) => {
     
+    socket.on("connection", handleConnection);
+    console.log("everything has started");
 
     socket.on(EVENT_NAMES.childReady, () => {
       onChildReady(socket);

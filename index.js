@@ -8,7 +8,7 @@ const io = new Server({
 
 io.listen(4000);
 
-const { EVENT_NAMES } = require('./utils');
+const { EVENT_NAMES } = require('./src/utils');
 const inquirer = require('inquirer');
 const prompts = require('./src/prompt');
 const dogPrompts = require('./src/prompt-dog');

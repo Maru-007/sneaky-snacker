@@ -1,6 +1,14 @@
 const { Server } = require('socket.io');
-const io = new Server(3001);
-const { EVENT_NAMES } = require('./src/utils');
+
+const io = new Server({
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.listen(4000);
+
+const { EVENT_NAMES } = require('./utils');
 const inquirer = require('inquirer');
 const prompts = require('./src/prompt');
 const dogPrompts = require('./src/prompt-dog');
@@ -76,15 +84,15 @@ function onDogReady(dog) {
 
 function choice(answer) {
   gameChoices = {
-    ok: answer.gameplay === 'Ok',
-    yes: answer.gameplay === 'Yes',
-    navigate: answer.gameplay === 'Navigate',
-    distraction: answer.gameplay === 'Distraction',
-    distract: answer.gameplay === 'Distract',
-    dontDistract: answer.gameplay === "Don't Distract",
-    search: answer.gameplay === 'Search',
-    cookieJar: answer.gameplay === 'Cookie Jar',
-    quit: answer.gameplay === 'No',
+    ok: answer === 'Ok',
+    yes: answer === 'Yes',
+    navigate: answer === 'Navigate',
+    distraction: answer === 'Distraction',
+    distract: answer === 'Distract',
+    dontDistract: answer === "Don't Distract",
+    search: answer === 'Search',
+    cookieJar: answer === 'Cookie Jar',
+    quit: answer === 'Quit',
   };
   return gameChoices;
 }
@@ -105,6 +113,7 @@ function startEventServer() {
     });
 
     socket.on(EVENT_NAMES.selection, (answer) => {
+      console.log(answer);
       if (choice(answer).yes) {
         io.emit(EVENT_NAMES.questionsReady, gamePrompt);
       }
@@ -121,10 +130,10 @@ function startEventServer() {
         };
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       }
-      if (rooms.includes(answer.gameplay)) {
-        let room = prompts.find((obj) => obj.id === answer.gameplay);
+      if (rooms.includes(answer)) {
+        let room = prompts.find((obj) => obj.id === answer);
         io.emit(EVENT_NAMES.questionsReady, room);
-        currentRoom = answer.gameplay;
+        currentRoom = answer;
         console.log(currentRoom);
       }
       if (choice(answer).distraction) {

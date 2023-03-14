@@ -167,11 +167,13 @@ function startEventServer() {
         const searchPrompt = {
           name: 'gameSearch',
           message: handleSearch(currentRoom),
-          type: 'confirm',
+          // type: 'confirm',
+          type: 'list',
+          choices: ["pickup", "don't pickup"],
         };
         io.emit(EVENT_NAMES.questionsReady, searchPrompt);
       }
-      if (answer.gameSearch === true) {
+      if (answer === "pickup") {
         io.emit(
           EVENT_NAMES.message,
           gameData.rooms[currentRoom].Search.obtained
@@ -189,7 +191,7 @@ function startEventServer() {
         };
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       }
-      if (answer.gameSearch === false) {
+      if (answer === "don't pickup") {
         const navigatePrompt = {
           name: 'gameplay',
           message: 'Where would you like to go?',

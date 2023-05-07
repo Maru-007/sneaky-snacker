@@ -1,4 +1,5 @@
 const gameData = require('../game.json');
+// const completion = require('../../aiconfig');
 
 class Room {
   constructor() {
@@ -48,4 +49,4 @@ function handleNPCNavigation(distractionRoom) {
   return npcLocation;
 }
 
-module.exports = { handleNavigation, handleNPCNavigation };
+module.exports = { handleNavigation, handleNPCNavigation, graph };

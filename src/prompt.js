@@ -1,8 +1,20 @@
 const gameData = require('./game.json');
+const { handleApi, responses } = require('../aiconfig');
+
+async function populateContent() {
+await handleApi('kidsroom');
+await handleApi('bathroom');
+await handleApi('parentsroom');
+await handleApi('hallway');
+await handleApi('livingroom');
+await handleApi('garage');
+await handleApi('kitchen');
+console.log('Ready to start');
+}
 
 const kidsroom = {
   name: 'gameplay',
-  message: gameData.rooms.kidsroom.description.default,
+  message: responses[0],
   type: 'list',
   choices: ['Navigate', 'Search', 'Distraction'],
   id: 'kidsroom',
@@ -10,7 +22,7 @@ const kidsroom = {
 
 const bathroom = {
   name: 'gameplay',
-  message: gameData.rooms.bathroom.description.default,
+  message: responses[1],
   type: 'list',
   choices: ['Navigate', 'Search', 'Distraction'],
   id: 'bathroom',
@@ -18,7 +30,7 @@ const bathroom = {
 
 const parentsroom = {
   name: 'gameplay',
-  message: gameData.rooms.parentsroom.description.default,
+  message: responses[2],
   type: 'list',
   choices: ['Navigate', 'Search', 'Distraction'],
   id: 'parentsroom',
@@ -26,7 +38,7 @@ const parentsroom = {
 
 const hallway = {
   name: 'gameplay',
-  message: gameData.rooms.hallway.description.default,
+  message: responses[3],
   type: 'list',
   choices: ['Navigate', 'Search', 'Distraction'],
   id: 'hallway',
@@ -34,7 +46,7 @@ const hallway = {
 
 const kitchen = {
   name: 'gameplay',
-  message: gameData.rooms.kitchen.description.default,
+  message: responses[4],
   type: 'list',
   choices: ['Navigate', 'Cookie Jar'],
   id: 'kitchen',
@@ -42,7 +54,7 @@ const kitchen = {
 
 const livingroom = {
   name: 'gameplay',
-  message: gameData.rooms.livingroom.description.default,
+  message: responses[5],
   type: 'list',
   choices: ['Navigate', 'Search', 'Distraction'],
   id: 'livingroom',
@@ -50,13 +62,13 @@ const livingroom = {
 
 const garage = {
   name: 'gameplay',
-  message: gameData.rooms.garage.description.default,
+  message: responses[6],
   type: 'list',
   choices: ['Navigate', 'Search', 'Distraction'],
   id: 'garage',
 };
 
-module.exports = [
+module.exports = {rooms:[
   kidsroom,
   bathroom,
   parentsroom,
@@ -64,4 +76,4 @@ module.exports = [
   kitchen,
   livingroom,
   garage,
-];
+], populateContent};

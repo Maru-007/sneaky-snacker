@@ -1,11 +1,5 @@
 const { Server } = require('socket.io');
-const io = new Server({
-  cors: {
-    origin: "http://localhost:3000",
-  },
-});
-
-io.listen(4000);
+const io = new Server(3001);
 
 const { EVENT_NAMES } = require('./src/utils');
 const inquirer = require('inquirer');
@@ -111,9 +105,9 @@ function startEventServer() {
   io.on('connection', (socket) => {
     
     socket.on("connection", handleConnection);
-    console.log("everything has started");
 
     socket.on(EVENT_NAMES.childReady, () => {
+      console.log('Received childReady', socket);
       onChildReady(socket);
       socketConnections++;
     });
@@ -127,7 +121,7 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, gamePrompt);
       }
       if (choice(answer).ok) {
-        io.emit(EVENT_NAMES.questionsReady, prompts[0]);
+        io.emit(EVENT_NAMES.questionsReady, prompts.rooms[0]);
       }
       if (choice(answer).navigate) {
         console.log(currentRoom);
@@ -140,7 +134,7 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       }
       if (rooms.includes(answer.gameplay)) {
-        let room = prompts.find((obj) => obj.id === answer.gameplay);
+        let room = prompts.rooms.find((obj) => obj.id === answer.gameplay);
         io.emit(EVENT_NAMES.questionsReady, room);
         currentRoom = answer.gameplay;
         console.log(currentRoom);
@@ -159,7 +153,7 @@ function startEventServer() {
           gameData.rooms[currentRoom].distractions.triggers.effect.scoreUpdate;
         playerModifier += itemScore;
         console.log(playerModifier, " Player Modifier Score");
-        let room = prompts.find((obj) => obj.id === currentRoom);
+        let room = prompts.rooms.find((obj) => obj.id === currentRoom);
         io.emit(EVENT_NAMES.message, handleEvent(currentRoom));
         let moveNPC = handleNPCNavigation(currentRoom);
         const randomEventCheck = Math.random();
@@ -169,7 +163,7 @@ function startEventServer() {
           : io.emit(EVENT_NAMES.questionsReady, NPC(currentRoom, moveNPC));
       }
       if (choice(answer).dontDistract) {
-        let room = prompts.find((obj) => obj.id === currentRoom);
+        let room = prompts.rooms.find((obj) => obj.id === currentRoom);
         io.emit(EVENT_NAMES.questionsReady, room);
       }
       if (choice(answer).search) {
@@ -343,5 +337,6 @@ function handleGameplayDogSelection(
     return [EVENT_NAMES.dogQuestions, navigatePrompt];
   }
 }
-
-startEventServer();
+prompts.populateContent().then(() => {
+  startEventServer();
+});

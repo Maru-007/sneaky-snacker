@@ -48,4 +48,4 @@ function handleNPCNavigation(distractionRoom) {
   return npcLocation;
 }
 
-module.exports = { handleNavigation, handleNPCNavigation };
+module.exports = { handleNavigation, handleNPCNavigation, graph };

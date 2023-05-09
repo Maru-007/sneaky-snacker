@@ -118,6 +118,7 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, gamePrompt);
       }
       if (choice(answer).ok) {
+        console.log(prompts[0])
         io.emit(EVENT_NAMES.questionsReady, prompts[0]);
       }
       if (choice(answer).navigate) {
@@ -337,4 +338,6 @@ function handleGameplayDogSelection(
   }
 }
 
+
 startEventServer();
+

@@ -1,22 +1,20 @@
 const { Configuration, OpenAIApi } = require("openai");
 require('dotenv').config();
-const graph = require('./src/navigation/navigation'); 
+const graph = require('../navigation/navigation'); 
+const gameData = require('../game.json');
+
 
 const promptExamples = {
-  1: "You see a backpack discarded on the ground. Do you pick it up?",
-  2: "Holy crap a dirty sock. It smells disgusting. Do you pick it up?",
-  3: "You see a stereo. Do you turn it on?",
-  4: "You see a hairdryer on the counter. Do you turn it on?",
-  5: "You see a hairdryer on the counter. Do you turn it on?",
-  moveToRoom: "The bathroom is brightly lit. Makeup and and appliances are plugged in everywhere. There shower has a slow drip and there are hair ties all over the floor." 
+  1: gameData.rooms['kidsroom'].distractions.prompt,
+  2: gameData.rooms['parentsroom'].distractions.prompt,
+  3: gameData.rooms['bathroom'].distractions.prompt,
+  4: gameData.rooms['hallway'].distractions.prompt,
 }
 const answerExamples = {
-  yes1: "You pick up the backpack. This will be useful",
-  no1: "You don't see anything useful.",
-  yes2: "You turn your stereo on, it's playing T-swizzle's favorite hits. You turn it up to max volume.",
-  no2: "You ignore the stereo",
-  yes3: "You turn the hair-dryer on. It screams into life and slowly starts rotating on the bathroom counter. You hear movement in the house.",
-  no3: "You ignore the hair-dryer",
+  1: gameData.rooms['kidsroom'].distractions.event,
+  2: gameData.rooms['parentsroom'].distractions.event,
+  3: gameData.rooms['bathroom'].distractions.event,
+  4: gameData.rooms['hallway'].distractions.event,
 }
 
 const configuration = new Configuration({

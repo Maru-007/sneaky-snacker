@@ -1,67 +1,39 @@
 const gameData = require('./game.json');
+const { handleApi } = require('../aiconfig');
 
-const kidsroom = {
-  name: 'gameplay',
-  message: gameData.rooms.kidsroom.description.default,
-  type: 'list',
-  choices: ['Navigate', 'Search', 'Distraction'],
-  id: 'kidsroom',
-};
+async function populateContent() {
+  for (let i = 0; i < prompts.length; i++) {
+    const response = await handleApi(gameData.adjacencyList[i].id);
+    
+    responses.push(response);
+  }
+  console.log('Ready to start');
+}
+const responses = [];
+let prompts = []
+let kidsroom = {}
+let bathroom = {}
+let parentsroom = {}
+let hallway = {}
+let kitchen = {}
+let livingroom = {}
+let garage = {}
 
-const bathroom = {
-  name: 'gameplay',
-  message: gameData.rooms.bathroom.description.default,
-  type: 'list',
-  choices: ['Navigate', 'Search', 'Distraction'],
-  id: 'bathroom',
-};
+prompts.push(kidsroom, bathroom, parentsroom, hallway, kitchen, livingroom, garage)
+function genPrompts () {
+  prompts.forEach((room, idx) => {
+    room.name = 'gameplay';
+    room.message = responses[idx];
+    room.type = 'list';
+    room.id = gameData.adjacencyList[idx].id
+    if (room.id === 'kitchen') {
+      room.choices = ['Navigate', 'Cookie Jar'];
+    } else {
+      room.choices = ['Navigate', 'Search', 'Distraction'];
+    };
+  })
+}
 
-const parentsroom = {
-  name: 'gameplay',
-  message: gameData.rooms.parentsroom.description.default,
-  type: 'list',
-  choices: ['Navigate', 'Search', 'Distraction'],
-  id: 'parentsroom',
-};
 
-const hallway = {
-  name: 'gameplay',
-  message: gameData.rooms.hallway.description.default,
-  type: 'list',
-  choices: ['Navigate', 'Search', 'Distraction'],
-  id: 'hallway',
-};
 
-const kitchen = {
-  name: 'gameplay',
-  message: gameData.rooms.kitchen.description.default,
-  type: 'list',
-  choices: ['Navigate', 'Cookie Jar'],
-  id: 'kitchen',
-};
-
-const livingroom = {
-  name: 'gameplay',
-  message: gameData.rooms.livingroom.description.default,
-  type: 'list',
-  choices: ['Navigate', 'Search', 'Distraction'],
-  id: 'livingroom',
-};
-
-const garage = {
-  name: 'gameplay',
-  message: gameData.rooms.garage.description.default,
-  type: 'list',
-  choices: ['Navigate', 'Search', 'Distraction'],
-  id: 'garage',
-};
-
-module.exports = [
-  kidsroom,
-  bathroom,
-  parentsroom,
-  hallway,
-  kitchen,
-  livingroom,
-  garage,
-];
+module.exports = {populateContent, genPrompts, prompts};

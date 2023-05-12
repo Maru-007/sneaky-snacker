@@ -1,7 +1,7 @@
 const gameData = require('../game.json');
 const { handleApi } = require('./aiconfig');
 
-async function populateContent() {
+async function populateDistContent() {
   let response;
   
   for (let i = 0; i < Object.keys(rooms).length; i++) {
@@ -20,7 +20,7 @@ const rooms = {
   livingroom: { event: '' }
 };
 
-populateContent();
+
 
 console.log(rooms);
 
@@ -50,4 +50,5 @@ module.exports = {
   handleEvent,
   handleDogDistraction,
   handleDogEvent,
+  populateDistContent
 };

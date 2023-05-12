@@ -10,7 +10,7 @@ io.listen(4000);
 
 const { EVENT_NAMES } = require('./src/utils');
 const inquirer = require('inquirer');
-const prompts = require('./src/prompt');
+const {populateContent, genPrompts, prompts} = require('./src/prompt');
 const dogPrompts = require('./src/prompt-dog');
 const { handleSearch, handleDogSearch } = require('./src/search/search');
 const {
@@ -18,6 +18,7 @@ const {
   handleEvent,
   handleDogDistraction,
   handleDogEvent,
+  populateDistContent
 } = require('./src/distraction/distraction');
 const gameData = require('./src/game.json');
 const { winCondition } = require('./src/cookieJar');
@@ -51,7 +52,7 @@ let dadModifier = 10;
 
 const welcomePrompt = {
   name: 'gameplay',
-  message: 'Welcome to Sneaky Snacker! Would you like to start a new game?',
+  message: 'Welcome to Sneaky Snackers! Would you like to start a new game?',
   type: 'list',
   choices: ['Yes', 'No'],
 };
@@ -74,6 +75,11 @@ const dogPrompt = {
 
 function onChildReady(player) {
   console.log(`Melis is ready!`, player.id);
+  populateContent().then(() => { 
+    genPrompts();
+    console.log("Prompts ready")
+  })
+  populateDistContent()
   player.emit(EVENT_NAMES.questionsReady, welcomePrompt);
 }
 

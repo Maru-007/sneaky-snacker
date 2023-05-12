@@ -34,9 +34,6 @@ function genPrompts () {
   })
 }
 
-populateContent().then(() => { 
-  genPrompts();
-  console.log("Prompts ready")
-})
 
-module.exports = prompts;
+
+module.exports = {populateContent, genPrompts, prompts};

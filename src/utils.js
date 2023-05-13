@@ -9,6 +9,7 @@ const EVENT_NAMES = {
   questionsReady: 'questionsReady',
   dogQuestions: 'dogQuestions',
   quit: 'quit',
+  promptsGenerated: 'promptsGenerated'
 };
 
 module.exports = {

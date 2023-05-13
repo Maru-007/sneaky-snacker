@@ -5,7 +5,9 @@ async function populateDistContent() {
   let response;
   
   for (let i = 0; i < Object.keys(rooms).length; i++) {
-      response = await handleApi(gameData.rooms[Object.keys(rooms)[i]].distractions.prompt);
+      response = await handleApi(gameData.rooms[Object.keys(rooms)[i]].distractions.prompt,
+                                gameData.adjacencyList[i].id
+                                );
       rooms[gameData.adjacencyList[i].id].event = response;
   }
   console.log('Ready to start');

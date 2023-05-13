@@ -1,6 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 require('dotenv').config();
 const graph = require('./src/navigation/navigation'); 
+const gameData = require('./src/game.json')
 // json room prompts
 const promptExamples = {
   1: "You're in you're room. You're surrounded by your bed and toys cast carelessly on the floor. A hunger grows in you. It is time for cookies.",
@@ -26,7 +27,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 async function completion (prompt) {
-    
+  try {
   // replace with some examples from the JSON
     const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -42,13 +43,25 @@ async function completion (prompt) {
     })
     const message = response.data.choices[0].message.content;
     return message;
+  } catch (error) {
+    throw new Error(error.message);
+  } 
     
 } 
-const handleApi = async (userPrompt) => {
-    console.log('Calling the function for prompts.');
-    const response = await completion(userPrompt);
-    return response;
-}
+const handleApi = async (id) => {
+  try {
+      console.log('Calling the function for prompts.');
+      const response = await completion(id); 
+      return response;
+  } catch (error) {
+      if (error) {
+          const defaultDescription = gameData.rooms[id].description.default;
+          return defaultDescription;
+      }
+      
+  }
+};
+
 
 
 module.exports = { handleApi };

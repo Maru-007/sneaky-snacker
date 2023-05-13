@@ -3,9 +3,11 @@ const { handleApi } = require('../aiconfig');
 
 async function populateContent() {
   for (let i = 0; i < prompts.length; i++) {
+    
     const response = await handleApi(gameData.adjacencyList[i].id);
     
     responses.push(response);
+
   }
   console.log('Ready to start');
 }

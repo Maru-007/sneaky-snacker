@@ -16,14 +16,14 @@ const answerExamples = {
   3: gameData.rooms['bathroom'].distractions.event,
   4: gameData.rooms['hallway'].distractions.event,
 }
-
+console.log(answerExamples)
 const configuration = new Configuration({
     apiKey: process.env.OPENAIKEY
 });
 const openai = new OpenAIApi(configuration);
 
 async function completion (prompt) {
-    
+  try {
     const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{role: "system", content: `You are a response generator for a video game, your response will be based off of the room the player is in. Your job is to generate responses for a player choosing a distraction option. Examples: ${promptExamples} & ${answerExamples}. Do not include any additional text, return only a string. `},
@@ -38,13 +38,25 @@ async function completion (prompt) {
     })
     const message = response.data.choices[0].message.content;
     return message;
-    
+  } catch (error) {
+    throw new Error(error.message);
+  }   
 } 
-const handleApi = async (userPrompt) => {
-    console.log('Calling the function for prompts.');
-    const response = await completion(userPrompt);
-    return response;
-}
+const handleApi = async (id, roomName) => {
+  console.log(id)
+  try {
+      console.log('Calling the function for distractions.');
+      const response = await completion(id); 
+      return response;
+  } catch (error) {
+      if (error) {
+        console.log(id, 'error')
+          const defaultDescription = gameData.rooms[roomName].distractions.event;
+          return defaultDescription;
+      }
+     
+  }
+};
 
 
 module.exports = { handleApi };

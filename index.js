@@ -92,6 +92,7 @@ function choice(answer) {
   gameChoices = {
     ok: answer === 'Ok',
     yes: answer === 'Yes',
+    playAgain: answer === 'Play again',
     navigate: answer === 'Navigate',
     distraction: answer === 'Distraction',
     distract: answer === 'Distract',
@@ -120,7 +121,7 @@ function startEventServer() {
 
     socket.on(EVENT_NAMES.selection, (answer) => {
       console.log(answer);
-      if (choice(answer).yes) {
+      if (choice(answer).yes || choice(answer).playAgain) {
         io.emit(EVENT_NAMES.questionsReady, gamePrompt);
       }
       if (choice(answer).ok) {

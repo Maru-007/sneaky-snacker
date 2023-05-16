@@ -91,11 +91,23 @@ function onChildReady(player) {
     });
 }
 
+
 function onDogReady(dog) {
-  console.log(`Diego is ready!`, dog.id);
+  console.log('Dog ready hit', dog.id)
   dog.emit(EVENT_NAMES.dogQuestions, welcomePrompt);
 }
-
+function handleStartGame(players) {
+  console.log(players)
+  if (players[0] && players[1]) {
+    onChildReady(players[0][0]);
+    onDogReady(players[1][0]);
+    
+  } else if (players[0] && !players[1]) {
+    onChildReady(players[0][0]);
+  } else if (players[1] && !players[0]) {
+    onDogReady(players[1][0]);
+  }
+}
 function choice(answer) {
   gameChoices = {
     ok: answer === 'Ok',
@@ -110,16 +122,22 @@ function choice(answer) {
   };
   return gameChoices;
 }
-let socketConnections = 0;
+let socketConnections = [];
 function startEventServer() {
+  
+
   io.on('connection', (socket) => {
+    socket.on(EVENT_NAMES.startGame, () => {
+      handleStartGame(socketConnections)
+    })
+
     socket.on(EVENT_NAMES.childReady, () => {
-      onChildReady(socket);
-      socketConnections++;
+      console.log(`Melis has joined!`, socket.id);
+      socketConnections.push([socket, 'child']);
     });
     socket.on(EVENT_NAMES.dogReady, () => {
-      onDogReady(socket);
-      socketConnections++;
+      console.log(`Diego has joined!`, socket.id);
+      socketConnections.push([socket, 'dog']);
     });
 
     socket.on(EVENT_NAMES.selection, (answer) => {
@@ -216,7 +234,7 @@ function startEventServer() {
       }
       if (choice(answer).cookieJar) {
         const win = winCondition(playerModifier, dogModifier);
-        socketConnections >= 2
+        socketConnections.length >= 2
           ? io.emit(EVENT_NAMES.questionsReady, win) &&
             io.emit(EVENT_NAMES.dogQuestions, win)
           : io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier));
@@ -311,7 +329,7 @@ function startEventServer() {
       }
       if (choice(answer).cookieJar) {
         const win = winCondition(playerModifier, dogModifier);
-        socketConnections >= 2
+        socketConnections.length >= 2
           ? io.emit(EVENT_NAMES.dogQuestions, win) &&
             io.emit(EVENT_NAMES.questionsReady, win)
           : io.emit(EVENT_NAMES.dogQuestions, winCondition(dogModifier));

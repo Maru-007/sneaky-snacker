@@ -10,7 +10,8 @@ const EVENT_NAMES = {
   dogQuestions: 'dogQuestions',
   quit: 'quit',
   promptsGenerated: 'promptsGenerated',
-  startGame: 'startGame'
+  startGame: 'startGame',
+  startButton : 'startButton',
 };
 
 module.exports = {

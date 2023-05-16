@@ -128,7 +128,9 @@ function startEventServer() {
 
   io.on('connection', (socket) => {
     socket.on(EVENT_NAMES.startGame, () => {
-      handleStartGame(socketConnections)
+      io.emit(EVENT_NAMES.startButton);
+      handleStartGame(socketConnections);
+      
     })
 
     socket.on(EVENT_NAMES.childReady, () => {
@@ -165,6 +167,7 @@ function startEventServer() {
         currentRoom = answer;
         console.log(currentRoom);
       }
+ 
       if (choice(answer).distraction) {
         const distraction = {
           name: 'gameplay',
@@ -256,10 +259,10 @@ function startEventServer() {
         const [eventName, eventData] = handleDog;
         io.emit(eventName, eventData);
       }
-      if (rooms.includes(answer.gameplay)) {
-        let room = dogPrompts.find((obj) => obj.id === answer.gameplay);
+      if (rooms.includes(answer)) {
+        let room = dogPrompts.find((obj) => obj.id === answer);
         io.emit(EVENT_NAMES.dogQuestions, room);
-        dogCurrentRoom = answer.gameplay;
+        dogCurrentRoom = answer;
       }
       if (choice(answer).distraction) {
         const dogDistraction = {

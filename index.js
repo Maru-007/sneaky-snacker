@@ -2,11 +2,11 @@ const { Server } = require('socket.io');
 
 const io = new Server({
   cors: {
-    origin: 'http://localhost:3000',
+    origin: process.env.WEB_CLIENT,
   },
 });
 
-io.listen(4000);
+io.listen(process.env.PORT);
 
 const { EVENT_NAMES } = require('./src/utils');
 const inquirer = require('inquirer');
@@ -256,10 +256,11 @@ function startEventServer() {
         const [eventName, eventData] = handleDog;
         io.emit(eventName, eventData);
       }
-      if (rooms.includes(answer.gameplay)) {
-        let room = dogPrompts.find((obj) => obj.id === answer.gameplay);
+      if (rooms.includes(answer)) {
+        console.log(answer, 'hello')
+        let room = dogPrompts.find((obj) => obj.id === answer);
         io.emit(EVENT_NAMES.dogQuestions, room);
-        dogCurrentRoom = answer.gameplay;
+        dogCurrentRoom = answer;
       }
       if (choice(answer).distraction) {
         const dogDistraction = {

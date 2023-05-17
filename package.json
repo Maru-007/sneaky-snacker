@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Sneaky Snacker is a kid-friendly, interactive game where you try to eat snacks without getting caught.",
   "main": "index.js",
+  "engines": {
+    "node": "14.18.1"
+  },
   "scripts": {
     "test": "jest",
     "start": "node index.js",

@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { Server } = require('socket.io');
 
 const io = new Server({
@@ -127,6 +129,7 @@ function startEventServer() {
   
 
   io.on('connection', (socket) => {
+    
     socket.on(EVENT_NAMES.startGame, () => {
       handleStartGame(socketConnections)
     })
@@ -139,7 +142,10 @@ function startEventServer() {
       console.log(`Diego has joined!`, socket.id);
       socketConnections.push([socket, 'dog']);
     });
-
+    socket.on('disconnect', (reason) => {
+      console.log(`User has disconnected!`, socket.id, reason);
+      socketConnections = socketConnections.filter(([s]) => s.id !== socket.id);
+    })
     socket.on(EVENT_NAMES.selection, (answer) => {
       console.log(answer);
       if (choice(answer).yes) {

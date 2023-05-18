@@ -3,12 +3,13 @@ const { handleApi } = require('./aiconfig');
 
 async function populateDistContent() {
   let response;
-  
+
   for (let i = 0; i < Object.keys(rooms).length; i++) {
-      response = await handleApi(gameData.rooms[Object.keys(rooms)[i]].distractions.prompt,
-                                gameData.adjacencyList[i].id
-                                );
-      rooms[gameData.adjacencyList[i].id].event = response;
+    response = await handleApi(
+      gameData.rooms[Object.keys(rooms)[i]].distractions.prompt,
+      gameData.adjacencyList[i].id
+    );
+    rooms[gameData.adjacencyList[i].id].event = response;
   }
   console.log('Ready to start');
 }
@@ -19,10 +20,8 @@ const rooms = {
   parentsroom: { event: '' },
   hallway: { event: '' },
   garage: { event: '' },
-  livingroom: { event: '' }
+  livingroom: { event: '' },
 };
-
-
 
 console.log(rooms);
 
@@ -52,5 +51,5 @@ module.exports = {
   handleEvent,
   handleDogDistraction,
   handleDogEvent,
-  populateDistContent
+  populateDistContent,
 };

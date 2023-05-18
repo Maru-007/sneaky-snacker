@@ -99,6 +99,7 @@ function choice(answer) {
     search: answer === 'Search',
     cookieJar: answer === 'Cookie Jar',
     quit: answer === 'Quit',
+    playagain: answer === 'Play Again'
   };
   return gameChoices;
 }
@@ -120,7 +121,7 @@ function startEventServer() {
 
     socket.on(EVENT_NAMES.selection, (answer) => {
       console.log(answer);
-      if (choice(answer).yes) {
+      if (choice(answer).yes || choice(answer).playagain) {
         io.emit(EVENT_NAMES.questionsReady, gamePrompt);
       }
       if (choice(answer).ok) {
@@ -213,7 +214,6 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, win) &&
         io.emit(EVENT_NAMES.dogQuestions, win)
         : io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier));
-        
         currentRoom = 'kidsroom';
       }
       if (choice(answer).quit) {
@@ -231,10 +231,10 @@ function startEventServer() {
         const [eventName, eventData] = handleDog;
         io.emit(eventName, eventData);
       }
-      if (rooms.includes(answer.gameplay)) {
-        let room = dogPrompts.find((obj) => obj.id === answer.gameplay);
+      if (rooms.includes(answer)) {
+        let room = dogPrompts.find((obj) => obj.id === answer);
         io.emit(EVENT_NAMES.dogQuestions, room);
-        dogCurrentRoom = answer.gameplay;
+        dogCurrentRoom = answer;
       }
       if (choice(answer).distraction) {
         const dogDistraction = {
@@ -268,11 +268,12 @@ function startEventServer() {
         const searchPrompt = {
           name: 'gameSearch',
           message: handleDogSearch(dogCurrentRoom),
-          type: 'confirm',
+          type: 'list',
+          choices: ["pickup", "don't pickup"],
         };
         io.emit(EVENT_NAMES.dogQuestions, searchPrompt);
       }
-      if (answer.gameSearch === true) {
+      if (answer === "pickup") {
         io.emit(
           EVENT_NAMES.dogMessage,
           gameData.rooms[dogCurrentRoom].dogSearch.obtained
@@ -290,7 +291,7 @@ function startEventServer() {
         };
         io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
       }
-      if (answer.gameSearch === false) {
+      if (answer === "don't pickup") {
         const navigatePrompt = {
           name: 'gameplay',
           message: 'Where would you like to go?',

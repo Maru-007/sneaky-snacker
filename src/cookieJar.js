@@ -7,14 +7,14 @@ let win = {
   name: 'gameplay',
   message: gameData.rooms.kitchen.CookieJar.triggers.effect.win,
   type: 'list',
-  choices: ['Yes', 'No'],
+  choices: ['Play Again', 'No'],
 };
 
 let lose = {
   name: 'gameplay',
   message: gameData.rooms.kitchen.CookieJar.triggers.effect.lose,
   type: 'list',
-  choices: ['Yes', 'No'],
+  choices: ['Play Again', 'No'],
 };
 
 let draw = {
@@ -22,7 +22,7 @@ let draw = {
   message:
     'A draw! Both you and dad share the cookies! Would you like to play again?',
   type: 'list',
-  choices: ['Yes', 'No'],
+  choices: ['Play Again', 'No'],
 };
 
 function winCondition(playerModifier, dogModifier) {

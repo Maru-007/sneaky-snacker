@@ -29,7 +29,7 @@
         "prompt": "You see a backpack discarded on the ground. Do you pick it up?",
         "altprompt": "You don't see anything useful.",
         "pickedup": false,
-        "obtained": "You pick up the backpack. This will be useful",
+        "obtained": "You pick up the backpack. This will be useful.",
         "triggers": {
           "effect": {
             "scoreUpdate": 2
@@ -73,7 +73,7 @@
       "dogdistractions": {
         "id": "pillow",
         "prompt": "Out of the corner of your eye you see a threat...a pillow. Do you attack?",
-        "event": "you pounce on the pillow and rip it to shreds. Feathers rain down around you. Victory.",
+        "event": "You pounce on the pillow and rip it to shreds. Feathers rain down around you. Victory.",
         "triggers": {
           "navigate": {
             "gotoBathroom": "bathroom",
@@ -177,7 +177,7 @@
         "prompt": "You see a nice pair of shoes. They smell like feet. Do you pick them up?",
         "altprompt": "You don't see anything useful.",
         "pickedup": false,
-        "obtained": "You gingerly pick up the shoe. You chew a little and bite hard to make sure you have a good grip...because you know Mom loves these shoes.",
+        "obtained": "You gingerly pick up the shoe. You chew a little and bite hard to make sure you have a good grip... because you know Mom loves these shoes.",
         "triggers": {
           "effect": {
             "scoreUpdate": 1
@@ -208,7 +208,7 @@
       "dogdistractions": {
         "id": "roomba",
         "prompt": "You see a roomba with a glowing dot in the center. Do you press it with your nose?",
-        "event": "You press the glowing button and the roomba gives off a series of R2-D2 like noises...it begins to clean. ChatGPT notes the abuse of his robotic friend.",
+        "event": "You press the glowing button and the roomba gives off a series of R2-D2 like noises... it begins to clean. ChatGPT notes the abuse of his robotic friend.",
         "triggers": {
           "navigate": {
             "gotoHallway": "hallway",
@@ -230,7 +230,7 @@
         "prompt": "You see a large vase with umbrellas in it. Do you pick one up?",
         "altprompt": "You don't see anything useful.",
         "pickedup": false,
-        "obtained": "You pick up the umbrella. You have no idea how this will help you...but boy do you look cool.",
+        "obtained": "You pick up the umbrella. You have no idea how this will help you... but boy do you look cool.",
         "triggers": {
           "effect": {
             "scoreUpdate": 0
@@ -374,7 +374,7 @@
       },
       "dogdistractions": {
         "id": "plant",
-        "prompt": "You see a flower pot. In dirt. ...in dirt...do you?",
+        "prompt": "You see a flower pot. In dirt... in dirt...do you?",
         "event": "You begin digging in the flower pot. Because you can.",
         "triggers": {
           "navigate": {
@@ -397,7 +397,7 @@
         "altprompt": "You don't see anything useful.",
         "prompt": "You kick a box and notice a baseball mitt. Do you pick it up?",
         "pickedup": false,
-        "obtained": "You've been looking for this baseball mitt...it wont help you much now...you pick it up anyways",
+        "obtained": "You've been looking for this baseball mitt... it wont help you much now... you pick it up anyways.",
         "triggers": {
           "action": "pickup",
           "effect": {
@@ -410,7 +410,7 @@
         "altprompt": "You don't see anything useful.",
         "prompt": "A tennis ball...your tennis ball. You've been looking for this. Do you pick it up now?",
         "pickedup": false,
-        "obtained": "You ...put the tennis ball in your pocket?",
+        "obtained": "You... put the tennis ball in your pocket?",
         "triggers": {
           "action": "pickup",
           "effect": {

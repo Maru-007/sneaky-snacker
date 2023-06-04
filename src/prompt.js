@@ -2,10 +2,6 @@ const gameData = require('./game.json');
 const { handleApi } = require('../aiconfig');
 
 async function populateContent() {
-
-  // Clear the existing responses array
-  responses.length = 0;
-  
   for (let i = 0; i < prompts.length; i++) {
     
     const response = await handleApi(gameData.adjacencyList[i].id);

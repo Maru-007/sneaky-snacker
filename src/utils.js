@@ -8,6 +8,7 @@ const EVENT_NAMES = {
   navigate: 'navigate',
   questionsReady: 'questionsReady',
   dogQuestions: 'dogQuestions',
+  promptsGenerated: 'promptsGenerated',
   quit: 'quit',
 };
 

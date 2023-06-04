@@ -84,6 +84,8 @@ function onChildReady(player) {
   populateContent().then(() => { 
     genPrompts();
     console.log("Prompts ready")
+  }).then(()=>{
+    player.emit(EVENT_NAMES.promptsGenerated);
   })
   populateDistContent()
   player.emit(EVENT_NAMES.questionsReady, welcomePrompt);
@@ -132,6 +134,7 @@ function startEventServer() {
       }
       if (choice(answer).ok) {
         console.log(prompts[0])
+    
         io.emit(EVENT_NAMES.questionsReady, prompts[0]);
       }
       if (choice(answer).navigate) {

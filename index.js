@@ -1,8 +1,16 @@
 const { Server } = require('socket.io');
-const io = new Server(3001);
+
+const io = new Server({
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
+
+io.listen(4000);
+
 const { EVENT_NAMES } = require('./src/utils');
 const inquirer = require('inquirer');
-const prompts = require('./src/prompt');
+const {populateContent, genPrompts, prompts} = require('./src/prompt');
 const dogPrompts = require('./src/prompt-dog');
 const { handleSearch, handleDogSearch } = require('./src/search/search');
 const {
@@ -10,6 +18,7 @@ const {
   handleEvent,
   handleDogDistraction,
   handleDogEvent,
+  populateDistContent
 } = require('./src/distraction/distraction');
 const gameData = require('./src/game.json');
 const { winCondition } = require('./src/cookieJar');
@@ -43,7 +52,7 @@ let dadModifier = 10;
 
 const welcomePrompt = {
   name: 'gameplay',
-  message: 'Welcome to Sneaky Snacker! Would you like to start a new game?',
+  message: 'Welcome to Sneaky Snackers! Would you like to start a new game?',
   type: 'list',
   choices: ['Yes', 'No'],
 };
@@ -66,6 +75,11 @@ const dogPrompt = {
 
 function onChildReady(player) {
   console.log(`Melis is ready!`, player.id);
+  populateContent().then(() => { 
+    genPrompts();
+    console.log("Prompts ready")
+  })
+  populateDistContent()
   player.emit(EVENT_NAMES.questionsReady, welcomePrompt);
 }
 
@@ -76,15 +90,16 @@ function onDogReady(dog) {
 
 function choice(answer) {
   gameChoices = {
-    ok: answer.gameplay === 'Ok',
-    yes: answer.gameplay === 'Yes',
-    navigate: answer.gameplay === 'Navigate',
-    distraction: answer.gameplay === 'Distraction',
-    distract: answer.gameplay === 'Distract',
-    dontDistract: answer.gameplay === "Don't Distract",
-    search: answer.gameplay === 'Search',
-    cookieJar: answer.gameplay === 'Cookie Jar',
-    quit: answer.gameplay === 'No',
+    ok: answer === 'Ok',
+    yes: answer === 'Yes',
+    navigate: answer === 'Navigate',
+    distraction: answer === 'Distraction',
+    distract: answer === 'Distract',
+    dontDistract: answer === "Don't Distract",
+    search: answer === 'Search',
+    cookieJar: answer === 'Cookie Jar',
+    quit: answer === 'Quit',
+    playagain: answer === 'Play Again'
   };
   return gameChoices;
 }
@@ -105,10 +120,12 @@ function startEventServer() {
     });
 
     socket.on(EVENT_NAMES.selection, (answer) => {
-      if (choice(answer).yes) {
+      console.log(answer);
+      if (choice(answer).yes || choice(answer).playagain) {
         io.emit(EVENT_NAMES.questionsReady, gamePrompt);
       }
       if (choice(answer).ok) {
+        console.log(prompts[0])
         io.emit(EVENT_NAMES.questionsReady, prompts[0]);
       }
       if (choice(answer).navigate) {
@@ -121,10 +138,10 @@ function startEventServer() {
         };
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       }
-      if (rooms.includes(answer.gameplay)) {
-        let room = prompts.find((obj) => obj.id === answer.gameplay);
+      if (rooms.includes(answer)) {
+        let room = prompts.find((obj) => obj.id === answer);
         io.emit(EVENT_NAMES.questionsReady, room);
-        currentRoom = answer.gameplay;
+        currentRoom = answer;
         console.log(currentRoom);
       }
       if (choice(answer).distraction) {
@@ -158,11 +175,13 @@ function startEventServer() {
         const searchPrompt = {
           name: 'gameSearch',
           message: handleSearch(currentRoom),
-          type: 'confirm',
+          // type: 'confirm',
+          type: 'list',
+          choices: ["pickup", "don't pickup"],
         };
         io.emit(EVENT_NAMES.questionsReady, searchPrompt);
       }
-      if (answer.gameSearch === true) {
+      if (answer === "pickup") {
         io.emit(
           EVENT_NAMES.message,
           gameData.rooms[currentRoom].Search.obtained
@@ -180,7 +199,7 @@ function startEventServer() {
         };
         io.emit(EVENT_NAMES.questionsReady, navigatePrompt);
       }
-      if (answer.gameSearch === false) {
+      if (answer === "don't pickup") {
         const navigatePrompt = {
           name: 'gameplay',
           message: 'Where would you like to go?',
@@ -195,7 +214,6 @@ function startEventServer() {
         io.emit(EVENT_NAMES.questionsReady, win) &&
         io.emit(EVENT_NAMES.dogQuestions, win)
         : io.emit(EVENT_NAMES.questionsReady, winCondition(playerModifier));
-        
         currentRoom = 'kidsroom';
       }
       if (choice(answer).quit) {
@@ -213,10 +231,10 @@ function startEventServer() {
         const [eventName, eventData] = handleDog;
         io.emit(eventName, eventData);
       }
-      if (rooms.includes(answer.gameplay)) {
-        let room = dogPrompts.find((obj) => obj.id === answer.gameplay);
+      if (rooms.includes(answer)) {
+        let room = dogPrompts.find((obj) => obj.id === answer);
         io.emit(EVENT_NAMES.dogQuestions, room);
-        dogCurrentRoom = answer.gameplay;
+        dogCurrentRoom = answer;
       }
       if (choice(answer).distraction) {
         const dogDistraction = {
@@ -250,11 +268,12 @@ function startEventServer() {
         const searchPrompt = {
           name: 'gameSearch',
           message: handleDogSearch(dogCurrentRoom),
-          type: 'confirm',
+          type: 'list',
+          choices: ["pickup", "don't pickup"],
         };
         io.emit(EVENT_NAMES.dogQuestions, searchPrompt);
       }
-      if (answer.gameSearch === true) {
+      if (answer === "pickup") {
         io.emit(
           EVENT_NAMES.dogMessage,
           gameData.rooms[dogCurrentRoom].dogSearch.obtained
@@ -272,7 +291,7 @@ function startEventServer() {
         };
         io.emit(EVENT_NAMES.dogQuestions, navigatePrompt);
       }
-      if (answer.gameSearch === false) {
+      if (answer === "don't pickup") {
         const navigatePrompt = {
           name: 'gameplay',
           message: 'Where would you like to go?',
@@ -326,4 +345,6 @@ function handleGameplayDogSelection(
   }
 }
 
+
 startEventServer();
+
